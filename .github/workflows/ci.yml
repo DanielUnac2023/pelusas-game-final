@@ -1,0 +1,48 @@
+name: Integración Continua y Calidad de Código
+
+on:
+  push:
+    branches: [ main, feature/* ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-analyze:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Copiar el código del repositorio
+      - name: Checkout del código
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Necesario para que SonarCloud analice la cobertura e historial
+
+      # 2. Configurar Java 21 (según la propiedad <java.version>21</java.version> de tu pom.xml)
+      - name: Configurar Java 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: 'maven'
+
+      # 3. Dar permisos de ejecución al ejecutable de Maven Wrapper
+      - name: Dar permisos a mvnw
+        run: chmod +x backend/mvnw
+
+      # 4. Compilar y ejecutar pruebas unitarias/integración
+      - name: Ejecutar Pruebas con Maven
+        run: |
+          cd backend
+          ./mvnw clean test
+
+      # 5. Enviar métricas a SonarCloud
+      - name: Analizar con SonarCloud
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          cd backend
+          ./mvnw sonar:sonar \
+            -Dsonar.projectKey=DanielUnac2023_backend \
+            -Dsonar.organization=danielunac2023 \
+            -Dsonar.host.url=https://sonarcloud.io
