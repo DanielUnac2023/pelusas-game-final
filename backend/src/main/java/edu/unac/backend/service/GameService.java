@@ -5,6 +5,7 @@ import edu.unac.backend.model.EstadoPartida;
 import edu.unac.backend.model.Jugador;
 import edu.unac.backend.model.Partida;
 import edu.unac.backend.repository.PartidaRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -61,35 +62,43 @@ public class GameService {
      * Paso 2 — Sacar Carta del Mazo:
      * Evalúa si aplica la Regla de Pérdida de Turno.
      */
-    public Partida sacarCarta(Long idPartida) {
-        Partida partida = obtenerPartida(idPartida);
+    @Transactional
+    public Partida sacarCarta(Long id) {
+        Partida partida = obtenerPartida(id);
         validarPartidaEnProgreso(partida);
 
-        Jugador actual = partida.getJugadorActual();
+        // 1. Extraer carta del mazo de forma aleatoria
         Carta cartaSacada = partida.getMazo().sacarCarta();
 
+        // Si el mazo se vació, finaliza la partida
         if (cartaSacada == null) {
             finalizarPartida(partida);
             return partidaRepository.save(partida);
         }
 
-        List<Carta> cartasMesa = actual.getCartasDelante();
+        Jugador actual = partida.getJugadorActual();
 
-        // Verificar si la carta ya existía en la mesa del jugador actual
-        boolean yaTieneValor = cartasMesa.stream()
+        // 2. Verificar si el valor de la nueva carta YA EXISTÍA en las cartas delante del jugador
+        boolean yaTeniaEseValor = actual.getCartasDelante().stream()
                 .anyMatch(c -> c.getValor() == cartaSacada.getValor());
 
-        // Regla de Pérdida de Turno: >= 3 cartas en mesa Y valor repetido
-        if (cartasMesa.size() >= 3 && yaTieneValor) {
-            // Pierde el turno y se descartan todas las cartas de la mesa
-            cartasMesa.clear();
-            partida.siguienteTurno();
-        } else {
-            // Se agrega la carta a la mesa del jugador
-            cartasMesa.add(cartaSacada);
+        // 3. Contar cuántas cartas tenía delante ANTES de añadir la nueva
+        int cantidadCartasAntes = actual.getCartasDelante().size();
+
+        // 4. Evaluar la Regla Oficial de Pérdida
+        // Condición: ¿Tenía 3 o más cartas en total Y la nueva carta repite un valor existente?
+        if (cantidadCartasAntes >= 3 && yaTeniaEseValor) {
+            // PERDIÓ EL TURNO
+            actual.getCartasDelante().clear(); // Se descartan todas las cartas de la mesa
+            partida.siguienteTurno(); // Pasa al siguiente jugador
+            return partidaRepository.save(partida);
         }
 
-        // Si el mazo se agotó al sacar esta carta, se finaliza el juego
+        // 5. Si no perdió (tenía < 3 cartas o el valor era nuevo), se agrega la carta normalmente
+        Carta nuevaCarta = new Carta(cartaSacada.getValor());
+        actual.getCartasDelante().add(nuevaCarta);
+
+        // Si tras haber sacado la carta actual el mazo quedó con 0 cartas, finaliza el juego
         if (partida.getMazo().getCantidadRestante() == 0) {
             finalizarPartida(partida);
         }

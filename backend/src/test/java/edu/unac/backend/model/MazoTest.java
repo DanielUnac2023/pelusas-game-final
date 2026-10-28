@@ -49,23 +49,20 @@ class MazoTest {
     @Test
     @DisplayName("Debe verificar que el mazo realmente cambie el orden al mezclarse")
     void testMezclarCambiaOrden() {
-        Mazo mazoSinMezclar = new Mazo();
-
-        // Obtenemos una copia de la lista de valores ANTES de mezclar
-        List<Integer> valoresOriginales = mazo.getCartas().stream()
+        // Mazo recién creado (ya viene mezclado por el constructor)
+        List<Integer> valoresPrimerMezcla = mazo.getCartas().stream()
                 .map(Carta::getValor)
                 .toList();
 
-        // Ejecutamos la mezcla
+        // Volvemos a mezclar
         mazo.mezclar();
 
-        // Obtenemos la lista de valores DESPUÉS de mezclar
-        List<Integer> valoresMezclados = mazo.getCartas().stream()
+        List<Integer> valoresSegundaMezcla = mazo.getCartas().stream()
                 .map(Carta::getValor)
                 .toList();
 
-        // Comprobamos que las dos listas NO sean exactamente iguales en orden
-        assertNotEquals(valoresOriginales, valoresMezclados, "El orden de las cartas debió haber cambiado tras mezclar");
+        // Comprobamos que el orden cambia entre mezclas
+        assertNotEquals(valoresPrimerMezcla, valoresSegundaMezcla, "El orden de las cartas debió haber cambiado tras mezclar");
     }
 
     @Test

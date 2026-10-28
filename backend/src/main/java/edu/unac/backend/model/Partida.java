@@ -19,8 +19,9 @@ public class Partida {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Jugador> jugadores = new ArrayList<>();
 
-    @Transient
-    private Mazo mazo;
+    // ✅ OBLIGATORIO: CascadeType.ALL para que JPA guarde los cambios internos del mazo
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    private Mazo mazo = new Mazo();
 
     public Partida() {
         this.mazo = new Mazo();
