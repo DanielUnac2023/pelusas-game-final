@@ -1,5 +1,4 @@
 package edu.unac.backend.service;
-
 import edu.unac.backend.model.PartidaHistorico;
 import edu.unac.backend.repository.PartidaHistoricoRepository;
 import org.junit.jupiter.api.BeforeEach;
