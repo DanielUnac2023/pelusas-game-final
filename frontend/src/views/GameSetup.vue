@@ -72,7 +72,6 @@ const crearEIniciarPartida = async () => {
 <template>
   <main class="min-h-screen w-full bg-slate-950 text-slate-100 flex items-center justify-center p-4 font-sans">
     
-    <div class="w-full max-w-md bg-slate-900 p-8 rounded-3xl border border-slate-800 shadow-xl space-y-6">
       
       <!-- Encabezado -->
       <header class="text-center space-y-2">
