@@ -71,8 +71,7 @@ const crearEIniciarPartida = async () => {
 
 <template>
   <main class="min-h-screen w-full bg-slate-950 text-slate-100 flex items-center justify-center p-4 font-sans">
-    
-      <div>
+    <div>
       <!-- Encabezado -->
       <header class="text-center space-y-2">
         <span class="inline-block bg-amber-500/10 text-amber-400 border border-amber-500/30 text-xs font-bold px-3 py-1 rounded-full uppercase">
@@ -88,7 +87,7 @@ const crearEIniciarPartida = async () => {
       </div>
 
       <!-- Lista de Jugadores (2 a 6) -->
-      <section class="space-y-3">
+      <section class="flex flex-col gap-1 pb-2">
         <div class="flex justify-between text-xs font-bold text-slate-400 px-1 uppercase">
           <span>Jugadores ({{ jugadores.length }}/6)</span>
           <span>¿Inicia?</span>

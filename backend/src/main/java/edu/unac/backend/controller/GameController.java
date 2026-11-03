@@ -48,19 +48,32 @@ public class GameController {
     }
 
     @PostMapping("/{id}/robar")
-    public ResponseEntity<GameStatusDTO> robarCartas(@PathVariable Long id, @RequestParam int valorCarta) {
-        Partida partida = gameService.robarCartas(id, valorCarta);
-        return ResponseEntity.ok(convertirADTO(partida, "Cartas robadas a rivales."));
+    public ResponseEntity<GameStatusDTO> robarCartas(@PathVariable Long id) {
+        // Ya no recibe @RequestParam int valorCarta desde la URL
+        Partida partida = gameService.robarCartas(id);
+        return ResponseEntity.ok(convertirADTO(partida, "Cartas robadas a rivales con éxito."));
     }
 
     @PostMapping("/{id}/plantarse")
     public ResponseEntity<GameStatusDTO> plantarse(@PathVariable Long id) {
-        Partida partida = gameService.plantarse(id);
-        return ResponseEntity.ok(convertirADTO(partida, "Jugador se ha plantado. Cambiando de turno."));
+        Partida partida = gameService.obtenerPartida(id);
+        Jugador jugadorActual = partida.getJugadorActual();
+
+        // Validar que el jugador haya sacado al menos una carta en este turno
+        boolean haSacadoAlMenosUnaCarta = !jugadorActual.getCartasDelante().isEmpty();
+
+        if (!haSacadoAlMenosUnaCarta) {
+            return ResponseEntity.badRequest()
+                    .body(convertirADTO(partida, "Debe sacar al menos una carta antes de poder plantarse."));
+        }
+
+        Partida partidaActualizada = gameService.plantarse(id);
+        return ResponseEntity.ok(convertirADTO(partidaActualizada, "Jugador se ha plantado. Cambiando de turno."));
     }
 
     /**
-     * Mapeador helper de la Entidad Partida al GameStatusDTO que consume el frontend.
+     * Mapeador helper de la Entidad Partida al GameStatusDTO que consume el
+     * frontend.
      */
     private GameStatusDTO convertirADTO(Partida partida, String mensaje) {
         GameStatusDTO dto = new GameStatusDTO();
