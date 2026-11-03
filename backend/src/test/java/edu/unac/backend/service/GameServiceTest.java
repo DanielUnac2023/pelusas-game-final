@@ -282,4 +282,37 @@ class GameServiceTest {
         assertTrue(oponenteActualizado.getCartasDelante().stream().noneMatch(c -> c.getValor() == 8));
         assertTrue(oponenteActualizado.getCartasDelante().stream().anyMatch(c -> c.getValor() == 3));
     }
+
+    @Test
+    @DisplayName("Debe robar TODAS las cartas del mismo valor si un oponente tiene múltiples cartas iguales")
+    void testRobarMultiplesCartasMismoValor() {
+        Jugador actual = partida.getJugadorActual();
+        Jugador oponente = partida.getJugadores().stream()
+                .filter(j -> !j.getId().equals(actual.getId()))
+                .findFirst().orElseThrow();
+
+        // 1. Asignar DOS cartas con el mismo valor (ej: valor 3) al oponente
+        oponente.getCartasDelante().add(new Carta(10L, 3));
+        oponente.getCartasDelante().add(new Carta(11L, 3));
+
+        // 2. Establecer que el jugador actual sacó una carta de valor 3
+        partida.setValorUltimaCarta(3);
+
+        // 3. Ejecutar el robo con la firma de 1 solo parámetro
+        Partida resultado = gameService.robarCartas(partida.getId());
+
+        Jugador oponenteActualizado = resultado.getJugadores().stream()
+                .filter(j -> j.getId().equals(oponente.getId()))
+                .findFirst().orElseThrow();
+
+        // 4. Aserciones:
+        // A. El oponente debe quedarse sin cartas de valor 3
+        assertTrue(oponenteActualizado.getCartasDelante().stream().noneMatch(c -> c.getValor() == 3));
+
+        // B. El jugador actual debe tener las 2 cartas robadas de valor 3
+        long cantidadTresesActual = resultado.getJugadorActual().getCartasDelante().stream()
+                .filter(c -> c.getValor() == 3)
+                .count();
+        assertEquals(2, cantidadTresesActual);
+    }
 }

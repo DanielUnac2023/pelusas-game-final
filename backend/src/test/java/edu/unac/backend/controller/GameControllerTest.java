@@ -113,23 +113,36 @@ class GameControllerTest {
     }
 
     @Test
-    @DisplayName("POST /api/partidas/{id}/robar - Retorna excepción cuando no hay cartas para robar")
-    void testRobarCartasSinCartaARobar() {
+    @DisplayName("POST /api/partidas/{id}/robar - Retorna HTTP 400 cuando ocurre una excepción de negocio")
+    void testRobarCartasSinCartaARobar() throws Exception {
+        // 1. Simular la excepción lanzada por el servicio
         when(gameService.robarCartas(eq(1L)))
-                .thenThrow(new IllegalStateException("No hay cartas de valor 9 para robar a ningún oponente."));
+                .thenThrow(new IllegalStateException("Debes sacar una carta primero para poder robar."));
 
-        org.junit.jupiter.api.Assertions.assertThrows(Exception.class, () -> {
-            mockMvc.perform(post("/api/partidas/1/robar")
-                    .contentType(MediaType.APPLICATION_JSON));
-        });
+        // 2. Simular obtenerPartida para que el catch cree el DTO correctamente
+        when(gameService.obtenerPartida(eq(1L))).thenReturn(partidaEjemplo);
+
+        // 3. Verificar status 400 Bad Request y mensaje en el DTO
+        mockMvc.perform(post("/api/partidas/1/robar")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.mensajeEvento").value("Debes sacar una carta primero para poder robar."));
     }
 
     @Test
     @DisplayName("POST /api/partidas/{id}/plantarse - Plantarse")
     void testPlantarse() throws Exception {
+        // 1. Asegurar que el jugador actual tenga al menos una carta para no activar el Bad Request
+        Jugador jugadorActual = partidaEjemplo.getJugadorActual();
+        jugadorActual.getCartasDelante().add(new Carta(1L, 5));
+
+        // 2. Configurar los mocks del servicio
+        when(gameService.obtenerPartida(eq(1L))).thenReturn(partidaEjemplo);
         when(gameService.plantarse(eq(1L))).thenReturn(partidaEjemplo);
 
-        mockMvc.perform(post("/api/partidas/1/plantarse"))
+        // 3. Ejecutar la petición HTTP y validar respuesta 200 OK
+        mockMvc.perform(post("/api/partidas/1/plantarse")
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.mensajeEvento").value("Jugador se ha plantado. Cambiando de turno."));
     }
