@@ -69,10 +69,10 @@ onMounted(() => {
     </div>
 
     <!-- Tablero de Juego Activo -->
-    <div v-else-if="gameState" class="max-w-5xl mx-auto space-y-6">
+    <div v-else-if="gameState" class="flex flex-col gap-3 w-full">
       
       <!-- Encabezado de la Mesa -->
-      <header class="bg-slate-900 p-4 rounded-2xl border border-slate-800 flex justify-between items-center shadow-lg">
+      <header class="bg-slate-900 p-8 rounded-2xl border border-slate-800 flex justify-between items-center shadow-lg">
         <div>
           <span class="text-xs font-bold text-slate-500 uppercase">Partida #{{ gameState.idPartida }}</span>
           <h1 class="text-xl font-black text-amber-400" data-testid="turn-owner">
@@ -81,14 +81,14 @@ onMounted(() => {
         </div>
 
         <!-- Info del Mazo -->
-        <div class="bg-slate-800 px-4 py-2 rounded-xl border border-slate-700 text-right">
+        <div class="bg-slate-800 px-5 py-2 rounded-xl border border-slate-700 text-right">
           <span class="text-xs text-slate-400 block font-bold">Mazo Restante</span>
           <span class="text-lg font-black text-emerald-400">{{ gameState.cartasRestantesMazo }} cartas</span>
         </div>
       </header>
 
       <!-- Panel de Alertas / Eventos del Backend -->
-      <div class="bg-slate-900/60 border border-amber-500/20 p-3 rounded-xl text-center text-sm font-semibold text-amber-200">
+      <div class="bg-slate-900/60 border border-amber-500/20 p-4 rounded-xl text-center text-sm font-semibold text-amber-200">
         📢 {{ gameState.mensajeEvento }}
       </div>
 
@@ -118,6 +118,14 @@ onMounted(() => {
         >
           🛑 Plantarse
         </button>
+
+        <button
+          @click="ejecutarAccion('robar')"
+          data-testid="btn-robar"
+          class="bg-rose-600 hover:bg-rose-500 font-bold px-6 py-3 rounded-xl transition cursor-pointer text-sm"
+        >
+          🫳 Robar Pelusas
+        </button>
       </div>
 
       <!-- Mensaje si la partida ha finalizado -->
@@ -130,11 +138,11 @@ onMounted(() => {
       </div>
 
       <!-- Renderizado de las Mesas de Todos los Jugadores (2 a 6) -->
-      <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
         <div 
           v-for="jugador in gameState.jugadores" 
           :key="jugador.id"
-          class="bg-slate-900 p-5 rounded-2xl border transition-all"
+          class="bg-slate-900 p-6 rounded-2xl border transition-all"
           :class="jugador.nombre === gameState.nombreJugadorActual ? 'border-amber-400/60 ring-1 ring-amber-400/30' : 'border-slate-800'"
         >
           <!-- Nombre y Puntuación Acumulada -->
