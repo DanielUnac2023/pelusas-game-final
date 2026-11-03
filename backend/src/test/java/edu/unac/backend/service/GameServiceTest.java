@@ -76,14 +76,20 @@ class GameServiceTest {
     @Test
     @DisplayName("Debe mover cartasDelante a pozoPuntos al guardar pelusas")
     void testGuardarPelusas() {
+        // 1. Obtener el jugador actual e incrustar la carta de prueba
         Jugador actual = partida.getJugadorActual();
         actual.getCartasDelante().add(new Carta(1L, 5));
 
+        // 2. Ejecutar la regla de negocio a través del servicio
         Partida resultado = gameService.guardarPelusas(1L);
 
-        assertTrue(actual.getCartasDelante().isEmpty());
-        assertEquals(1, actual.getPozoPuntos().size());
-        assertEquals(5, actual.getPozoPuntos().get(0).getValor());
+        // 3. Obtener la referencia actualizada del jugador desde el resultado devuelto
+        Jugador jugadorActualizado = resultado.getJugadorActual();
+
+        // 4. Aserciones sobre el estado devuelto por el servicio
+        assertTrue(jugadorActualizado.getCartasDelante().isEmpty());
+        assertEquals(1, jugadorActualizado.getPozoPuntos().size());
+        assertEquals(5, jugadorActualizado.getPozoPuntos().get(0).getValor());
     }
 
     @Test
@@ -118,7 +124,7 @@ class GameServiceTest {
     }
 
     @Test
-    @DisplayName("Debe robar cartas coincidentes de los rivales")
+    @DisplayName("Debe robar cartas coincidentes con la última carta sacada")
     void testRobarCartas() {
         Jugador actual = partida.getJugadorActual();
         Jugador oponente = partida.getJugadores().get(1);
@@ -126,11 +132,28 @@ class GameServiceTest {
         // Oponente tiene en mesa una carta con valor 8
         oponente.getCartasDelante().add(new Carta(1L, 8));
 
-        gameService.robarCartas(1L, 8);
+        // Establecer la última carta sacada en el turno activo
+        partida.setValorUltimaCarta(8);
+
+        // Invocación con 1 solo parámetro
+        gameService.robarCartas(1L);
 
         assertTrue(oponente.getCartasDelante().isEmpty());
         assertEquals(1, actual.getCartasDelante().size());
         assertEquals(8, actual.getCartasDelante().get(0).getValor());
+    }
+
+    @Test
+    @DisplayName("Debe lanzar excepción si se intenta robar sin haber sacado carta previamente")
+    void testRobarCartasSinSacarCartaPrevia() {
+        partida.setValorUltimaCarta(null);
+
+        IllegalStateException exception = assertThrows(
+                IllegalStateException.class,
+                () -> gameService.robarCartas(1L)
+        );
+
+        assertEquals("Debes sacar una carta primero para poder robar.", exception.getMessage());
     }
 
     @Test
@@ -217,31 +240,48 @@ class GameServiceTest {
     }
 
     @Test
-    @DisplayName("No debe hacer nada al guardar pelusas si cartasDelante está vacía")
+    @DisplayName("Debe lanzar excepción al intentar guardar pelusas si no tiene cartas delante")
     void testGuardarPelusasConMesaVacia() {
+        // 1. Configuración previa (ejemplo: partidaId = 1L)
+        Long partidaId = 1L;
+
+        // Asegurarse de que el jugador actual no tenga cartas en 'cartasDelante'
         Jugador actual = partida.getJugadorActual();
-        actual.getCartasDelante().clear(); // Asegurar que está vacía
+        actual.getCartasDelante().clear();
 
-        Partida res = gameService.guardarPelusas(1L);
+        // 2. Verificar que el servicio lance IllegalStateException
+        IllegalStateException exception = assertThrows(
+                IllegalStateException.class,
+                () -> gameService.guardarPelusas(partidaId)
+        );
 
-        assertNotNull(res);
-        assertTrue(actual.getPozoPuntos().isEmpty());
+        // 3. (Opcional) Validar que el mensaje coincida exactamente con el de la regla de negocio
+        assertEquals("No tienes cartas delante para guardar.", exception.getMessage());
     }
 
     @Test
-    @DisplayName("Debe ignorar cartas del oponente que no coinciden al robar")
+    @DisplayName("Debe robar solo las cartas del valor especificado e ignorar las demás")
     void testRobarCartasIgnoraValoresDiferentes() {
         Jugador actual = partida.getJugadorActual();
-        Jugador oponente = partida.getJugadores().get(1);
+        Jugador oponente = partida.getJugadores().stream()
+                .filter(j -> !j.getId().equals(actual.getId()))
+                .findFirst().orElseThrow();
 
-        // Oponente tiene una carta valor 5 y el jugador busca robar valor 8
-        oponente.getCartasDelante().add(new Carta(1L, 5));
+        oponente.getCartasDelante().add(new Carta(1L, 8));
+        oponente.getCartasDelante().add(new Carta(2L, 3));
 
-        gameService.robarCartas(1L, 8);
+        // Establecer la última carta sacada a 8
+        partida.setValorUltimaCarta(8);
 
-        // La carta debe continuar en la mesa del oponente
-        assertEquals(1, oponente.getCartasDelante().size());
-        assertTrue(actual.getCartasDelante().isEmpty());
+        // Invocación con 1 solo parámetro
+        Partida resultado = gameService.robarCartas(1L);
+
+        Jugador oponenteActualizado = resultado.getJugadores().stream()
+                .filter(j -> j.getId().equals(oponente.getId()))
+                .findFirst().orElseThrow();
+
+        assertTrue(oponenteActualizado.getCartasDelante().stream().noneMatch(c -> c.getValor() == 8));
+        assertTrue(oponenteActualizado.getCartasDelante().stream().anyMatch(c -> c.getValor() == 3));
     }
 
     @Test
