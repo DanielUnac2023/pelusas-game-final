@@ -1,22 +1,25 @@
 package edu.unac.backend.service;
 
-import edu.unac.backend.model.Carta;
-import edu.unac.backend.model.EstadoPartida;
-import edu.unac.backend.model.Jugador;
-import edu.unac.backend.model.Partida;
+import edu.unac.backend.model.*;
+import edu.unac.backend.repository.PartidaHistoricoRepository;
 import edu.unac.backend.repository.PartidaRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.stream.Collectors;
 
+import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class GameService {
 
     @Autowired
     private PartidaRepository partidaRepository;
+
+    @Autowired
+    private PartidaHistoricoRepository partidaHistoricoRepository;
 
     /**
      * Crea e inicializa una nueva partida de 2 a 6 jugadores.
@@ -84,7 +87,8 @@ public class GameService {
 
         Jugador actual = partida.getJugadorActual();
 
-        // 2. Verificar si el valor de la nueva carta YA EXISTÍA en las cartas delante del jugador
+        // 2. Verificar si el valor de la nueva carta YA EXISTÍA en las cartas delante
+        // del jugador
         boolean yaTeniaEseValor = actual.getCartasDelante().stream()
                 .anyMatch(c -> c.getValor() == cartaSacada.getValor());
 
@@ -92,7 +96,8 @@ public class GameService {
         int cantidadCartasAntes = actual.getCartasDelante().size();
 
         // 4. Evaluar la Regla Oficial de Pérdida
-        // Condición: ¿Tenía 3 o más cartas en total Y la nueva carta repite un valor existente?
+        // Condición: ¿Tenía 3 o más cartas en total Y la nueva carta repite un valor
+        // existente?
         if (cantidadCartasAntes >= 3 && yaTeniaEseValor) {
             // PERDIÓ EL TURNO
             actual.getCartasDelante().clear(); // Se descartan todas las cartas de la mesa
@@ -100,12 +105,14 @@ public class GameService {
             return partidaRepository.save(partida);
         }
 
-        // 5. Si no perdió (tenía < 3 cartas o el valor era nuevo), se agrega la carta normalmente
+        // 5. Si no perdió (tenía < 3 cartas o el valor era nuevo), se agrega la carta
+        // normalmente
         Carta nuevaCarta = new Carta(cartaSacada.getValor());
         actual.getCartasDelante().add(nuevaCarta);
         partida.setValorUltimaCarta(cartaSacada.getValor());
 
-        // Si tras haber sacado la carta actual el mazo quedó con 0 cartas, finaliza el juego
+        // Si tras haber sacado la carta actual el mazo quedó con 0 cartas, finaliza el
+        // juego
         if (partida.getMazo().getCantidadRestante() == 0) {
             finalizarPartida(partida);
         }
@@ -186,6 +193,39 @@ public class GameService {
             j.getPozoPuntos().addAll(j.getCartasDelante());
             j.getCartasDelante().clear();
         }
+
+        // 2. Determinar el ganador aplicando la regla de desempate
+        Jugador ganador = resolverGanadorConDesempate(partida.getJugadores());
+
+        // 3. Generar el resumen de jugadores con sus puntos Y SUS CARTAS
+        StringBuilder resumen = new StringBuilder();
+        for (int i = 0; i < partida.getJugadores().size(); i++) {
+            Jugador j = partida.getJugadores().get(i);
+            int puntos = j.getPozoPuntos().stream().mapToInt(Carta::getValor).sum();
+
+            // Extraer y ordenar la lista de valores de cartas (ej: [8, 5, 4, 2])
+            List<Integer> valoresCartas = j.getPozoPuntos().stream()
+                    .map(Carta::getValor)
+                    .sorted(Comparator.reverseOrder())
+                    .toList();
+
+            resumen.append(j.getNombre())
+                    .append(" (").append(puntos).append(" pts - Cartas: ").append(valoresCartas).append(")");
+
+            if (i < partida.getJugadores().size() - 1) {
+                resumen.append(", ");
+            }
+        }
+
+        // 4. Crear y guardar el registro del histórico
+        PartidaHistorico historico = new PartidaHistorico();
+        historico.setPartidaId(String.valueOf(partida.getId()));
+        historico.setFechaFin(LocalDateTime.now());
+        historico.setGanadorNombre(ganador != null ? ganador.getNombre() : "Empate Total");
+        historico.setGanadorPuntaje(ganador != null ? calcularPuntos(ganador) : 0);
+        historico.setResumenJugadores(resumen.toString());
+
+        partidaHistoricoRepository.save(historico);
     }
 
     public Partida obtenerPartida(Long idPartida) {
@@ -197,5 +237,47 @@ public class GameService {
         if (partida.getEstado() != EstadoPartida.EN_PROGRESO) {
             throw new IllegalStateException("La partida no está en curso.");
         }
+    }
+
+    public List<PartidaHistorico> obtenerHistorial() {
+        return partidaHistoricoRepository.findAll();
+    }
+
+    /**
+     * Mecanismo de Desempate (Segun Especificacion Oficial):
+     * 1. Compara por puntaje total acumulado.
+     * 2. Si hay empate, compara secuencialmente la cantidad de cartas de valor 1, 2, 3... hasta 10.
+     */
+    private Jugador resolverGanadorConDesempate(List<Jugador> jugadores) {
+        if (jugadores == null || jugadores.isEmpty()) {
+            return null;
+        }
+
+        return jugadores.stream().max((j1, j2) -> {
+            int puntos1 = calcularPuntos(j1);
+            int puntos2 = calcularPuntos(j2);
+
+            // Criterio 1: Mayor puntaje acumulado
+            if (puntos1 != puntos2) {
+                return Integer.compare(puntos1, puntos2);
+            }
+
+            // Criterio 2: Desempate por cantidad de cartas de valor 1 al 10
+            for (int valor = 1; valor <= 10; valor++) {
+                final int val = valor;
+                long cant1 = j1.getPozoPuntos().stream().filter(c -> c.getValor() == val).count();
+                long cant2 = j2.getPozoPuntos().stream().filter(c -> c.getValor() == val).count();
+
+                if (cant1 != cant2) {
+                    return Long.compare(cant1, cant2);
+                }
+            }
+
+            return 0; // Empate total en cantidad de cartas en todos los valores
+        }).orElse(null);
+    }
+
+    private int calcularPuntos(Jugador jugador) {
+        return jugador.getPozoPuntos().stream().mapToInt(Carta::getValor).sum();
     }
 }

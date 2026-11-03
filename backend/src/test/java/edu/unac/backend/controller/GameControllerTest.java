@@ -1,10 +1,6 @@
 package edu.unac.backend.controller;
 
-import edu.unac.backend.model.Carta;
-import edu.unac.backend.model.EstadoPartida;
-import edu.unac.backend.model.Jugador;
-import edu.unac.backend.model.Mazo;
-import edu.unac.backend.model.Partida;
+import edu.unac.backend.model.*;
 import edu.unac.backend.service.GameService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -16,8 +12,10 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
@@ -149,4 +147,16 @@ class GameControllerTest {
                 .andExpect(jsonPath("$.idPartida").value(2L))
                 .andExpect(jsonPath("$.cartasRestantesMazo").value(0));
     }
+    @Test
+    void testObtenerHistorial() throws Exception {
+        PartidaHistorico historico = new PartidaHistorico("1", LocalDateTime.now(), "Carlos", 25, "Carlos (25 pts), Ana (10 pts)");
+        when(gameService.obtenerHistorial()).thenReturn(List.of(historico));
+
+        mockMvc.perform(get("/api/partidas/historico"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].partidaId").value("1"))
+                .andExpect(jsonPath("$[0].ganadorNombre").value("Carlos"))
+                .andExpect(jsonPath("$[0].ganadorPuntaje").value(25));
+    }
+
 }
