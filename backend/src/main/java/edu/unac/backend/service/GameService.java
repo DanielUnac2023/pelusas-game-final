@@ -8,6 +8,7 @@ import edu.unac.backend.repository.PartidaRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.stream.Collectors;
 
 import java.util.*;
 
@@ -49,12 +50,17 @@ public class GameService {
         Partida partida = obtenerPartida(idPartida);
         validarPartidaEnProgreso(partida);
 
-        Jugador actual = partida.getJugadorActual();
-        if (actual != null && !actual.getCartasDelante().isEmpty()) {
-            actual.getPozoPuntos().addAll(actual.getCartasDelante());
-            actual.getCartasDelante().clear();
+        if (partida.getValorUltimaCarta() != null) {
+            throw new IllegalStateException("Solo puedes guardar al inicio del turno, antes de sacar una carta.");
         }
 
+        Jugador actual = partida.getJugadorActual();
+        if (actual.getCartasDelante().isEmpty()) {
+            throw new IllegalStateException("No tienes cartas delante para guardar.");
+        }
+
+        actual.getPozoPuntos().addAll(actual.getCartasDelante());
+        actual.getCartasDelante().clear();
         return partidaRepository.save(partida);
     }
 
@@ -97,12 +103,12 @@ public class GameService {
         // 5. Si no perdió (tenía < 3 cartas o el valor era nuevo), se agrega la carta normalmente
         Carta nuevaCarta = new Carta(cartaSacada.getValor());
         actual.getCartasDelante().add(nuevaCarta);
+        partida.setValorUltimaCarta(cartaSacada.getValor());
 
         // Si tras haber sacado la carta actual el mazo quedó con 0 cartas, finaliza el juego
         if (partida.getMazo().getCantidadRestante() == 0) {
             finalizarPartida(partida);
         }
-
         return partidaRepository.save(partida);
     }
 
@@ -110,28 +116,53 @@ public class GameService {
      * Paso 3 — Robar Cartas:
      * Toma las cartas de igual valor recién sacado que tengan los oponentes.
      */
-    public Partida robarCartas(Long idPartida, int valorCarta) {
+    public Partida robarCartas(Long idPartida) {
         Partida partida = obtenerPartida(idPartida);
         validarPartidaEnProgreso(partida);
 
-        Jugador actual = partida.getJugadorActual();
+        // 1. Validar nulo antes de evaluar la regla
+        Integer valorUltimo = partida.getValorUltimaCarta();
+        if (valorUltimo == null) {
+            throw new IllegalStateException("Debes sacar una carta primero para poder robar.");
+        }
 
+        Jugador actual = partida.getJugadorActual();
+        if (actual == null) {
+            throw new IllegalStateException("No se pudo identificar al jugador actual.");
+        }
+
+        boolean seRoboAlguna = false;
+
+        // 2. Recorrer oponentes de forma segura
         for (Jugador oponente : partida.getJugadores()) {
-            if (!oponente.equals(actual)) {
-                Iterator<Carta> iterator = oponente.getCartasDelante().iterator();
-                while (iterator.hasNext()) {
-                    Carta c = iterator.next();
-                    if (c.getValor() == valorCarta) {
-                        actual.getCartasDelante().add(c);
-                        iterator.remove();
+            // Evitar NullPointer en oponente o coincidencia con jugador actual
+            if (oponente != null && !oponente.getId().equals(actual.getId())) {
+
+                if (oponente.getCartasDelante() != null) {
+                    // Filtrar las cartas a robar
+                    List<Carta> cartasARobar = oponente.getCartasDelante().stream()
+                            .filter(c -> c != null && c.getValor() == valorUltimo)
+                            .collect(Collectors.toList());
+
+                    if (!cartasARobar.isEmpty()) {
+                        // Transferir de forma segura para Hibernate/JPA
+                        cartasARobar.forEach(carta -> {
+                            oponente.getCartasDelante().remove(carta);
+                            actual.getCartasDelante().add(carta);
+                        });
+                        seRoboAlguna = true;
                     }
                 }
             }
         }
 
+        // 3. Validar si se logró robar al menos una carta
+        if (!seRoboAlguna) {
+            throw new IllegalStateException("No hay cartas de valor " + valorUltimo + " para robar a ningún oponente.");
+        }
+
         return partidaRepository.save(partida);
     }
-
     /**
      * Finaliza voluntariamente el turno y le da paso al siguiente jugador.
      */
