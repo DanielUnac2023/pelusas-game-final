@@ -102,13 +102,26 @@ class GameControllerTest {
     }
 
     @Test
-    @DisplayName("POST /api/partidas/{id}/robar - Robar cartas")
-    void testRobarCartas() throws Exception {
-        when(gameService.robarCartas(eq(1L), eq(5))).thenReturn(partidaEjemplo);
+    @DisplayName("POST /api/partidas/{id}/robar - Robar cartas exitosamente")
+    void testRobarCartasExitoso() throws Exception {
+        when(gameService.robarCartas(eq(1L))).thenReturn(partidaEjemplo);
 
-        mockMvc.perform(post("/api/partidas/1/robar").param("valorCarta", "5"))
+        mockMvc.perform(post("/api/partidas/1/robar")
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.mensajeEvento").value("Cartas robadas a rivales."));
+                .andExpect(jsonPath("$.mensajeEvento").value("Cartas robadas a rivales con éxito."));
+    }
+
+    @Test
+    @DisplayName("POST /api/partidas/{id}/robar - Retorna excepción cuando no hay cartas para robar")
+    void testRobarCartasSinCartaARobar() {
+        when(gameService.robarCartas(eq(1L)))
+                .thenThrow(new IllegalStateException("No hay cartas de valor 9 para robar a ningún oponente."));
+
+        org.junit.jupiter.api.Assertions.assertThrows(Exception.class, () -> {
+            mockMvc.perform(post("/api/partidas/1/robar")
+                    .contentType(MediaType.APPLICATION_JSON));
+        });
     }
 
     @Test

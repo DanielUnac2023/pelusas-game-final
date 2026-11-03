@@ -46,9 +46,10 @@ public class GameController {
     }
 
     @PostMapping("/{id}/robar")
-    public ResponseEntity<GameStatusDTO> robarCartas(@PathVariable Long id, @RequestParam int valorCarta) {
-        Partida partida = gameService.robarCartas(id, valorCarta);
-        return ResponseEntity.ok(convertirADTO(partida, "Cartas robadas a rivales."));
+    public ResponseEntity<GameStatusDTO> robarCartas(@PathVariable Long id) {
+        // Ya no recibe @RequestParam int valorCarta desde la URL
+        Partida partida = gameService.robarCartas(id);
+        return ResponseEntity.ok(convertirADTO(partida, "Cartas robadas a rivales con éxito."));
     }
 
     @PostMapping("/{id}/plantarse")
