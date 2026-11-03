@@ -127,7 +127,7 @@ class GameControllerTest {
     @Test
     @DisplayName("POST /api/partidas/{id}/plantarse - Plantarse")
     void testPlantarse() throws Exception {
-        when(gameService.plantarse(1L)).thenReturn(partidaEjemplo);
+        when(gameService.plantarse(eq(1L))).thenReturn(partidaEjemplo);
 
         mockMvc.perform(post("/api/partidas/1/plantarse"))
                 .andExpect(status().isOk())
