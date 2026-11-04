@@ -58,11 +58,14 @@ const crearEIniciarPartida = async () => {
     if (partidaCreada && partidaCreada.idPartida) {
       router.push(`/game/${partidaCreada.idPartida}`);
     } else {
-      throw new Error("Respuesta inválida del servidor");
+      // El backend respondió 400: mostrar el motivo que envía en mensajeEvento
+      errorMensaje.value =
+        partidaCreada?.mensajeEvento ?? "Respuesta inválida del servidor.";
     }
   } catch (error) {
     console.error("Error al crear la partida en el backend:", error);
-    errorMensaje.value = "No se pudo conectar con el servidor Spring Boot. Asegúrate de que esté encendido en http://localhost:8080.";
+    errorMensaje.value =
+      "No se pudo conectar con el servidor Spring Boot. Asegúrate de que esté encendido en http://localhost:8080.";
   } finally {
     cargando.value = false;
   }
