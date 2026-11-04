@@ -35,8 +35,13 @@ public class GameController {
 
     @PostMapping("/{id}/guardar")
     public ResponseEntity<GameStatusDTO> guardarPelusas(@PathVariable Long id) {
-        Partida partida = gameService.guardarPelusas(id);
-        return ResponseEntity.ok(convertirADTO(partida, "Pelusas guardadas en el pozo seguro."));
+        try {
+            Partida partida = gameService.guardarPelusas(id);
+            return ResponseEntity.ok(convertirADTO(partida, "Pelusas guardadas en el pozo seguro."));
+        } catch (IllegalStateException e) {
+            Partida partidaActual = gameService.obtenerPartida(id);
+            return ResponseEntity.badRequest().body(convertirADTO(partidaActual, e.getMessage()));
+        }
     }
 
     @PostMapping("/{id}/sacar")

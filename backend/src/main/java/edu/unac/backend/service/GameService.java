@@ -117,6 +117,7 @@ public class GameService {
      * Paso 3 — Robar Cartas:
      * Toma las cartas de igual valor recién sacado que tengan los oponentes.
      */
+    @Transactional
     public Partida robarCartas(Long idPartida) {
         Partida partida = obtenerPartida(idPartida);
         validarPartidaEnProgreso(partida);
@@ -133,33 +134,23 @@ public class GameService {
 
         boolean seRoboAlguna = false;
 
-        // Recorrer TODOS los oponentes para buscar cartas coincidentes
         for (Jugador oponente : partida.getJugadores()) {
-            if (oponente != null && !oponente.getId().equals(actual.getId())) {
+            if (oponente.getId().equals(actual.getId())) continue;
 
-                if (oponente.getCartasDelante() != null) {
-                    // 1. Extraer TODAS las cartas (1, 2, 5 o más) que coincidan con el valor sacado
-                    List<Carta> cartasARobar = new ArrayList<>(
-                            oponente.getCartasDelante().stream()
-                                    .filter(c -> c != null && c.getValor() == valorUltimo.intValue())
-                                    .collect(Collectors.toList())
-                    );
-
-                    // 2. Si el oponente tiene cartas coincidentes, se transfieren en bloque
-                    if (!cartasARobar.isEmpty()) {
-                        oponente.getCartasDelante().removeAll(cartasARobar);
-                        actual.getCartasDelante().addAll(cartasARobar);
-                        seRoboAlguna = true;
-                    }
+            Iterator<Carta> it = oponente.getCartasDelante().iterator();
+            while (it.hasNext()) {
+                Carta carta = it.next();
+                if (carta.getValor() == valorUltimo.intValue()) {
+                    it.remove();
+                    actual.getCartasDelante().add(carta);
+                    seRoboAlguna = true;
                 }
             }
         }
 
-        // Si ningún oponente tenía cartas de ese valor
         if (!seRoboAlguna) {
             throw new IllegalStateException("No hay cartas de valor " + valorUltimo + " para robar a ningún oponente.");
         }
-
         return partidaRepository.save(partida);
     }
     /**
