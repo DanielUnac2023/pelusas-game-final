@@ -158,15 +158,21 @@ class GameControllerTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {2, 6})
-    void crearPartida_aceptaLimitesDeJugadores(int n) throws Exception {
-        ok(crear(nombres(n))).andExpect(jsonPath("$.jugadores.length()").value(n));
+    @ValueSource(strings = {
+            "[\"J1\",\"J2\"]",
+            "[\"J1\",\"J2\",\"J3\",\"J4\",\"J5\",\"J6\"]"})
+    void crearPartida_aceptaLimitesDeJugadores(String json) throws Exception {
+        int esperados = json.split(",").length;
+        ok(crear(json)).andExpect(jsonPath("$.jugadores.length()").value(esperados));
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {0, 1, 7})
-    void crearPartida_rechazaCantidadInvalida(int n) {
-        assertFalla(crear(nombres(n)), IllegalArgumentException.class,
+    @ValueSource(strings = {
+            "[]",
+            "[\"J1\"]",
+            "[\"J1\",\"J2\",\"J3\",\"J4\",\"J5\",\"J6\",\"J7\"]"})
+    void crearPartida_rechazaCantidadInvalida(String json) {
+        assertFalla(crear(json), IllegalArgumentException.class,
                 "La partida debe tener entre 2 y 6 jugadores.");
         assertThat(partidaRepository.count()).isZero();
     }
