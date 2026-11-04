@@ -71,9 +71,7 @@ const crearEIniciarPartida = async () => {
 
 <template>
   <main class="min-h-screen w-full bg-slate-950 text-slate-100 flex items-center justify-center p-4 font-sans">
-    
-    <div class="w-full max-w-md bg-slate-900 p-8 rounded-3xl border border-slate-800 shadow-xl flex flex-col gap-1">
-      
+    <div>
       <!-- Encabezado -->
       <header class="text-center space-y-2">
         <span class="inline-block bg-amber-500/10 text-amber-400 border border-amber-500/30 text-xs font-bold px-3 py-1 rounded-full uppercase">
@@ -162,6 +160,14 @@ const crearEIniciarPartida = async () => {
         <span v-if="cargando">Creando Partida...</span>
         <span v-else>Crear e Iniciar Partida</span>
       </button>
+      
+<!-- Botón Ver Historial de Partidas -->
+      <router-link
+        to="/history"
+        class="w-full py-3.5 bg-slate-800/80 hover:bg-slate-800 border border-slate-700 hover:border-slate-600 text-slate-300 font-bold rounded-2xl text-xs flex items-center justify-center gap-2 transition-colors cursor-pointer text-center block"
+      >
+        <span>📜</span> Ver Historial de Partidas
+      </router-link>
 
     </div>
   </main>
