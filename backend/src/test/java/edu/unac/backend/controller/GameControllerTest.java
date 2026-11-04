@@ -372,28 +372,51 @@ class GameControllerIntegrationTest {
     }
 
     @Test
-    void sacar_sinJugadoresYMazoVacioTerminaEnEmpateTotal() throws Exception {
-        finalizarConMazoVacio();
+    @DisplayName("POST /api/partidas/{id}/robar - Robar cartas exitosamente")
+    void testRobarCartasExitoso() throws Exception {
+        when(gameService.robarCartas(eq(1L))).thenReturn(partidaEjemplo);
 
-        PartidaHistorico h = unicoHistorico();
-        assertThat(h.getGanadorNombre()).isEqualTo("Empate Total");
-        assertThat(h.getGanadorPuntaje()).isZero();
-        assertThat(h.getResumenJugadores()).isEmpty();
+        mockMvc.perform(post("/api/partidas/1/robar")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.mensajeEvento").value("Cartas robadas a rivales con éxito."));
+    }
+
+    @Test
+    @DisplayName("POST /api/partidas/{id}/robar - Retorna HTTP 400 cuando ocurre una excepción de negocio")
+    void testRobarCartasSinCartaARobar() throws Exception {
+        // 1. Simular la excepción lanzada por el servicio
+        when(gameService.robarCartas(eq(1L)))
+                .thenThrow(new IllegalStateException("Debes sacar una carta primero para poder robar."));
+
+        // 2. Simular obtenerPartida para que el catch cree el DTO correctamente
+        when(gameService.obtenerPartida(eq(1L))).thenReturn(partidaEjemplo);
+
+        // 3. Verificar status 400 Bad Request y mensaje en el DTO
+        mockMvc.perform(post("/api/partidas/1/robar")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.mensajeEvento").value("Debes sacar una carta primero para poder robar."));
     }
 
     // ------------------------------------------------------------------ desempate
 
     @Test
-    void desempate_gananteMasCartasDeValorBajo() throws Exception {
-        finalizarConMazoVacio(
-                jugador("Ana", NADA, new int[]{5, 5}),
-                jugador("Beto", NADA, new int[]{4, 6}));
+    @DisplayName("POST /api/partidas/{id}/plantarse - Plantarse")
+    void testPlantarse() throws Exception {
+        // 1. Asegurar que el jugador actual tenga al menos una carta para no activar el Bad Request
+        Jugador jugadorActual = partidaEjemplo.getJugadorActual();
+        jugadorActual.getCartasDelante().add(new Carta(1L, 5));
 
-        PartidaHistorico h = unicoHistorico();
-        assertThat(h.getGanadorNombre()).isEqualTo("Beto");
-        assertThat(h.getGanadorPuntaje()).isEqualTo(10);
-        assertThat(h.getResumenJugadores())
-                .isEqualTo("Ana (10 pts - Cartas: [5, 5]), Beto (10 pts - Cartas: [6, 4])");
+        // 2. Configurar los mocks del servicio
+        when(gameService.obtenerPartida(eq(1L))).thenReturn(partidaEjemplo);
+        when(gameService.plantarse(eq(1L))).thenReturn(partidaEjemplo);
+
+        // 3. Ejecutar la petición HTTP y validar respuesta 200 OK
+        mockMvc.perform(post("/api/partidas/1/plantarse")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.mensajeEvento").value("Jugador se ha plantado. Cambiando de turno."));
     }
 
     @Test

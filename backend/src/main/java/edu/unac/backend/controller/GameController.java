@@ -37,8 +37,13 @@ public class GameController {
 
     @PostMapping("/{id}/guardar")
     public ResponseEntity<GameStatusDTO> guardarPelusas(@PathVariable Long id) {
-        Partida partida = gameService.guardarPelusas(id);
-        return ResponseEntity.ok(convertirADTO(partida, "Pelusas guardadas en el pozo seguro."));
+        try {
+            Partida partida = gameService.guardarPelusas(id);
+            return ResponseEntity.ok(convertirADTO(partida, "Pelusas guardadas en el pozo seguro."));
+        } catch (IllegalStateException e) {
+            Partida partidaActual = gameService.obtenerPartida(id);
+            return ResponseEntity.badRequest().body(convertirADTO(partidaActual, e.getMessage()));
+        }
     }
 
     @PostMapping("/{id}/sacar")
@@ -48,19 +53,38 @@ public class GameController {
     }
 
     @PostMapping("/{id}/robar")
-    public ResponseEntity<GameStatusDTO> robarCartas(@PathVariable Long id, @RequestParam int valorCarta) {
-        Partida partida = gameService.robarCartas(id, valorCarta);
-        return ResponseEntity.ok(convertirADTO(partida, "Cartas robadas a rivales."));
+    public ResponseEntity<GameStatusDTO> robarCartas(@PathVariable Long id) {
+        try {
+            Partida partida = gameService.robarCartas(id);
+            return ResponseEntity.ok(convertirADTO(partida, "Cartas robadas a rivales con éxito."));
+        } catch (IllegalStateException e) {
+            // e.getMessage() toma exactamente "Debes sacar una carta primero para poder robar."
+            // o "No hay cartas de valor X para robar a ningún oponente." según la función original.
+            Partida partidaActual = gameService.obtenerPartida(id);
+            return ResponseEntity.badRequest().body(convertirADTO(partidaActual, e.getMessage()));
+        }
     }
 
     @PostMapping("/{id}/plantarse")
     public ResponseEntity<GameStatusDTO> plantarse(@PathVariable Long id) {
-        Partida partida = gameService.plantarse(id);
-        return ResponseEntity.ok(convertirADTO(partida, "Jugador se ha plantado. Cambiando de turno."));
+        Partida partida = gameService.obtenerPartida(id);
+        Jugador jugadorActual = partida.getJugadorActual();
+
+        // Validar que el jugador haya sacado al menos una carta en este turno
+        boolean haSacadoAlMenosUnaCarta = !jugadorActual.getCartasDelante().isEmpty();
+
+        if (!haSacadoAlMenosUnaCarta) {
+            return ResponseEntity.badRequest()
+                    .body(convertirADTO(partida, "Debe sacar al menos una carta antes de poder plantarse."));
+        }
+
+        Partida partidaActualizada = gameService.plantarse(id);
+        return ResponseEntity.ok(convertirADTO(partidaActualizada, "Jugador se ha plantado. Cambiando de turno."));
     }
 
     /**
-     * Mapeador helper de la Entidad Partida al GameStatusDTO que consume el frontend.
+     * Mapeador helper de la Entidad Partida al GameStatusDTO que consume el
+     * frontend.
      */
     private GameStatusDTO convertirADTO(Partida partida, String mensaje) {
         GameStatusDTO dto = new GameStatusDTO();

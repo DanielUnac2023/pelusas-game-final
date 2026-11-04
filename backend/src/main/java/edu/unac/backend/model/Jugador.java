@@ -13,10 +13,12 @@ public class Jugador {
 
     private String nombre;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "jugador_delante_id")
     private List<Carta> cartasDelante = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "jugador_pozo_id")
     private List<Carta> pozoPuntos = new ArrayList<>();
 
     public Jugador() {

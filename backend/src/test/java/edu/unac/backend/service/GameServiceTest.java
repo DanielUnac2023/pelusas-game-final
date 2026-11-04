@@ -9,6 +9,11 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -76,14 +81,20 @@ class GameServiceTest {
     @Test
     @DisplayName("Debe mover cartasDelante a pozoPuntos al guardar pelusas")
     void testGuardarPelusas() {
+        // 1. Obtener el jugador actual e incrustar la carta de prueba
         Jugador actual = partida.getJugadorActual();
         actual.getCartasDelante().add(new Carta(1L, 5));
 
+        // 2. Ejecutar la regla de negocio a través del servicio
         Partida resultado = gameService.guardarPelusas(1L);
 
-        assertTrue(actual.getCartasDelante().isEmpty());
-        assertEquals(1, actual.getPozoPuntos().size());
-        assertEquals(5, actual.getPozoPuntos().get(0).getValor());
+        // 3. Obtener la referencia actualizada del jugador desde el resultado devuelto
+        Jugador jugadorActualizado = resultado.getJugadorActual();
+
+        // 4. Aserciones sobre el estado devuelto por el servicio
+        assertTrue(jugadorActualizado.getCartasDelante().isEmpty());
+        assertEquals(1, jugadorActualizado.getPozoPuntos().size());
+        assertEquals(5, jugadorActualizado.getPozoPuntos().get(0).getValor());
     }
 
     @Test
@@ -117,21 +128,6 @@ class GameServiceTest {
         assertEquals(1, res.getIndiceJugadorActual());
     }
 
-    @Test
-    @DisplayName("Debe robar cartas coincidentes de los rivales")
-    void testRobarCartas() {
-        Jugador actual = partida.getJugadorActual();
-        Jugador oponente = partida.getJugadores().get(1);
-
-        // Oponente tiene en mesa una carta con valor 8
-        oponente.getCartasDelante().add(new Carta(1L, 8));
-
-        gameService.robarCartas(1L, 8);
-
-        assertTrue(oponente.getCartasDelante().isEmpty());
-        assertEquals(1, actual.getCartasDelante().size());
-        assertEquals(8, actual.getCartasDelante().get(0).getValor());
-    }
 
     @Test
     @DisplayName("Debe avanzar el turno al plantarse")
@@ -217,31 +213,65 @@ class GameServiceTest {
     }
 
     @Test
-    @DisplayName("No debe hacer nada al guardar pelusas si cartasDelante está vacía")
+    @DisplayName("Debe lanzar excepción al intentar guardar pelusas si no tiene cartas delante")
     void testGuardarPelusasConMesaVacia() {
+        // 1. Configuración previa (ejemplo: partidaId = 1L)
+        Long partidaId = 1L;
+
+        // Asegurarse de que el jugador actual no tenga cartas en 'cartasDelante'
         Jugador actual = partida.getJugadorActual();
-        actual.getCartasDelante().clear(); // Asegurar que está vacía
+        actual.getCartasDelante().clear();
 
-        Partida res = gameService.guardarPelusas(1L);
+        // 2. Verificar que el servicio lance IllegalStateException
+        IllegalStateException exception = assertThrows(
+                IllegalStateException.class,
+                () -> gameService.guardarPelusas(partidaId)
+        );
 
-        assertNotNull(res);
-        assertTrue(actual.getPozoPuntos().isEmpty());
+        // 3. (Opcional) Validar que el mensaje coincida exactamente con el de la regla de negocio
+        assertEquals("No tienes cartas delante para guardar.", exception.getMessage());
     }
 
     @Test
-    @DisplayName("Debe ignorar cartas del oponente que no coinciden al robar")
-    void testRobarCartasIgnoraValoresDiferentes() {
+    @DisplayName("Debe robar la carta coincidente del oponente y conservar la propia")
+    void testRobarCartas() {
         Jugador actual = partida.getJugadorActual();
         Jugador oponente = partida.getJugadores().get(1);
 
-        // Oponente tiene una carta valor 5 y el jugador busca robar valor 8
-        oponente.getCartasDelante().add(new Carta(1L, 5));
+        actual.getCartasDelante().add(new Carta(1L, 8));    // la que acaba de sacar
+        oponente.getCartasDelante().add(new Carta(2L, 8));
+        partida.setValorUltimaCarta(8);
 
-        gameService.robarCartas(1L, 8);
+        Partida resultado = gameService.robarCartas(1L);
 
-        // La carta debe continuar en la mesa del oponente
-        assertEquals(1, oponente.getCartasDelante().size());
-        assertTrue(actual.getCartasDelante().isEmpty());
+        assertTrue(oponente.getCartasDelante().isEmpty());
+        assertEquals(2, actual.getCartasDelante().size());
+        assertTrue(actual.getCartasDelante().stream().allMatch(c -> c.getValor() == 8));
+        verify(partidaRepository).save(resultado);
+    }
+
+    @Test
+    @DisplayName("Debe robar a todos los oponentes que tengan el valor")
+    void testRobarCartasDeVariosOponentes() {
+        Jugador j1 = partida.getJugadores().get(0);
+        Jugador j2 = partida.getJugadores().get(1);
+        Jugador j3 = new Jugador(3L, "Jugador 3");
+        partida.setJugadores(Arrays.asList(j1, j2, j3));
+
+        j1.getCartasDelante().add(new Carta(1L, 1));
+        j2.getCartasDelante().add(new Carta(2L, 1));
+        j2.getCartasDelante().add(new Carta(3L, 7));
+        j3.getCartasDelante().add(new Carta(4L, 1));
+        partida.setValorUltimaCarta(1);
+
+        Partida resultado = gameService.robarCartas(1L);
+
+        assertEquals(3, j1.getCartasDelante().size());
+        assertTrue(j1.getCartasDelante().stream().allMatch(c -> c.getValor() == 1));
+        assertEquals(1, j2.getCartasDelante().size());
+        assertEquals(7, j2.getCartasDelante().get(0).getValor());
+        assertTrue(j3.getCartasDelante().isEmpty());
+        verify(partidaRepository).save(resultado);
     }
 
     @Test
@@ -357,4 +387,20 @@ class GameServiceTest {
                 "Jugador 1".equals(h.getGanadorNombre())
         ));
     }
+
+    @Test
+    @DisplayName("Debe lanzar excepción si no se puede identificar al jugador actual")
+    void testRobarCartasSinJugadorActual() {
+        partida.setValorUltimaCarta(8);
+        Partida partidaSpy = spy(partida);
+        doReturn(null).when(partidaSpy).getJugadorActual();
+        doReturn(Optional.of(partidaSpy)).when(partidaRepository).findById(1L);
+
+        IllegalStateException ex = assertThrows(IllegalStateException.class,
+                () -> gameService.robarCartas(1L));
+
+        assertEquals("No se pudo identificar al jugador actual.", ex.getMessage());
+        verify(partidaRepository, never()).save(any());
+    }
+
 }

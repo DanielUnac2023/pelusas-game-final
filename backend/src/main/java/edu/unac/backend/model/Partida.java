@@ -32,11 +32,18 @@ public class Partida {
         this.mazo = new Mazo();
     }
 
+    // Valor de la última carta sacada en el turno actual; null si aún no sacó
+    private Integer valorUltimaCarta;
+
+    public Integer getValorUltimaCarta() { return valorUltimaCarta; }
+    public void setValorUltimaCarta(Integer valorUltimaCarta) { this.valorUltimaCarta = valorUltimaCarta; }
+
     // Avanza al siguiente turno cíclicamente
     public void siguienteTurno() {
         if (!jugadores.isEmpty()) {
             this.indiceJugadorActual = (this.indiceJugadorActual + 1) % jugadores.size();
         }
+        this.valorUltimaCarta = null;
     }
 
     public Jugador getJugadorActual() {
