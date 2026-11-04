@@ -49,9 +49,15 @@ public class GameController {
 
     @PostMapping("/{id}/robar")
     public ResponseEntity<GameStatusDTO> robarCartas(@PathVariable Long id) {
-        // Ya no recibe @RequestParam int valorCarta desde la URL
-        Partida partida = gameService.robarCartas(id);
-        return ResponseEntity.ok(convertirADTO(partida, "Cartas robadas a rivales con éxito."));
+        try {
+            Partida partida = gameService.robarCartas(id);
+            return ResponseEntity.ok(convertirADTO(partida, "Cartas robadas a rivales con éxito."));
+        } catch (IllegalStateException e) {
+            // e.getMessage() toma exactamente "Debes sacar una carta primero para poder robar."
+            // o "No hay cartas de valor X para robar a ningún oponente." según la función original.
+            Partida partidaActual = gameService.obtenerPartida(id);
+            return ResponseEntity.badRequest().body(convertirADTO(partidaActual, e.getMessage()));
+        }
     }
 
     @PostMapping("/{id}/plantarse")

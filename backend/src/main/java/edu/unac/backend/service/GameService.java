@@ -7,6 +7,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.stream.Collectors;
+import java.util.ArrayList;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -127,7 +128,6 @@ public class GameService {
         Partida partida = obtenerPartida(idPartida);
         validarPartidaEnProgreso(partida);
 
-        // 1. Validar nulo antes de evaluar la regla
         Integer valorUltimo = partida.getValorUltimaCarta();
         if (valorUltimo == null) {
             throw new IllegalStateException("Debes sacar una carta primero para poder robar.");
@@ -140,30 +140,29 @@ public class GameService {
 
         boolean seRoboAlguna = false;
 
-        // 2. Recorrer oponentes de forma segura
+        // Recorrer TODOS los oponentes para buscar cartas coincidentes
         for (Jugador oponente : partida.getJugadores()) {
-            // Evitar NullPointer en oponente o coincidencia con jugador actual
             if (oponente != null && !oponente.getId().equals(actual.getId())) {
 
                 if (oponente.getCartasDelante() != null) {
-                    // Filtrar las cartas a robar
-                    List<Carta> cartasARobar = oponente.getCartasDelante().stream()
-                            .filter(c -> c != null && c.getValor() == valorUltimo)
-                            .collect(Collectors.toList());
+                    // 1. Extraer TODAS las cartas (1, 2, 5 o más) que coincidan con el valor sacado
+                    List<Carta> cartasARobar = new ArrayList<>(
+                            oponente.getCartasDelante().stream()
+                                    .filter(c -> c != null && c.getValor() == valorUltimo.intValue())
+                                    .collect(Collectors.toList())
+                    );
 
+                    // 2. Si el oponente tiene cartas coincidentes, se transfieren en bloque
                     if (!cartasARobar.isEmpty()) {
-                        // Transferir de forma segura para Hibernate/JPA
-                        cartasARobar.forEach(carta -> {
-                            oponente.getCartasDelante().remove(carta);
-                            actual.getCartasDelante().add(carta);
-                        });
+                        oponente.getCartasDelante().removeAll(cartasARobar);
+                        actual.getCartasDelante().addAll(cartasARobar);
                         seRoboAlguna = true;
                     }
                 }
             }
         }
 
-        // 3. Validar si se logró robar al menos una carta
+        // Si ningún oponente tenía cartas de ese valor
         if (!seRoboAlguna) {
             throw new IllegalStateException("No hay cartas de valor " + valorUltimo + " para robar a ningún oponente.");
         }
