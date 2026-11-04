@@ -8,6 +8,8 @@ import edu.unac.backend.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import edu.unac.backend.model.PartidaHistorico;
+import edu.unac.backend.repository.PartidaHistoricoRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -114,5 +116,11 @@ public class GameController {
         dto.setJugadores(jugadorDTOs);
 
         return dto;
+    }
+
+    @GetMapping("/historico")
+    public ResponseEntity<List<PartidaHistorico>> obtenerHistorial() {
+        List<PartidaHistorico> historial = gameService.obtenerHistorial();
+        return ResponseEntity.ok(historial);
     }
 }

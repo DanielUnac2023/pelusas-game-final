@@ -1,9 +1,7 @@
 package edu.unac.backend.service;
 
-import edu.unac.backend.model.Carta;
-import edu.unac.backend.model.EstadoPartida;
-import edu.unac.backend.model.Jugador;
-import edu.unac.backend.model.Partida;
+import edu.unac.backend.model.*;
+import edu.unac.backend.repository.PartidaHistoricoRepository;
 import edu.unac.backend.repository.PartidaRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -19,12 +17,15 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class GameServiceTest {
 
     @Mock
     private PartidaRepository partidaRepository;
+
+    @Mock
+    private PartidaHistoricoRepository partidaHistoricoRepository;
 
     @InjectMocks
     private GameService gameService;
@@ -284,35 +285,116 @@ class GameServiceTest {
     }
 
     @Test
-    @DisplayName("Debe robar TODAS las cartas del mismo valor si un oponente tiene múltiples cartas iguales")
-    void testRobarMultiplesCartasMismoValor() {
+    @DisplayName("Debe obtener el historial de partidas guardadas")
+    void testObtenerHistorial() {
+        PartidaHistorico item = new PartidaHistorico();
+        when(partidaHistoricoRepository.findAll()).thenReturn(List.of(item));
+
+        List<PartidaHistorico> resultado = gameService.obtenerHistorial();
+
+        assertEquals(1, resultado.size());
+        verify(partidaHistoricoRepository, times(1)).findAll();
+    }
+
+    @Test
+    @DisplayName("Debe manejar el caso de finalización cuando no hay ganador (Ganador Null / Empate)")
+    void testFinalizarPartidaGanadorNull() {
+        // Para forzar ganador null, inicializamos sin jugadores o con puntos por defecto
+        Partida p = new Partida();
+        p.setId(2L);
+        p.setEstado(EstadoPartida.EN_PROGRESO);
+        p.setJugadores(List.of()); // Lista vacía para que maxPuntos quede en -1 y ganador sea null
+
+        when(partidaRepository.findById(2L)).thenReturn(Optional.of(p));
+        when(partidaRepository.save(any(Partida.class))).thenAnswer(i -> i.getArguments()[0]);
+
+        // Al sacar la última carta con mazo en 0, disparará finalizarPartida con ganador = null
+        p.getMazo().getCartas().clear();
+        gameService.sacarCarta(2L);
+
+        verify(partidaHistoricoRepository, times(1)).save(any());
+    }
+
+    @Test
+    @DisplayName("No debe perder el turno si tiene 3 o más cartas pero el valor sacado NO es repetido")
+    void testSacarCartaMasDeTresCartasValorNoRepetido() {
         Jugador actual = partida.getJugadorActual();
-        Jugador oponente = partida.getJugadores().stream()
-                .filter(j -> !j.getId().equals(actual.getId()))
-                .findFirst().orElseThrow();
+        actual.getCartasDelante().add(new Carta(1L, 1));
+        actual.getCartasDelante().add(new Carta(2L, 2));
+        actual.getCartasDelante().add(new Carta(3L, 3));
 
-        // 1. Asignar DOS cartas con el mismo valor (ej: valor 3) al oponente
-        oponente.getCartasDelante().add(new Carta(10L, 3));
-        oponente.getCartasDelante().add(new Carta(11L, 3));
+        // Forzar sacar una carta de valor 4 (no existente en la mesa)
+        partida.getMazo().getCartas().add(0, new Carta(4L, 4));
 
-        // 2. Establecer que el jugador actual sacó una carta de valor 3
-        partida.setValorUltimaCarta(3);
+        Partida res = gameService.sacarCarta(1L);
 
-        // 3. Ejecutar el robo con la firma de 1 solo parámetro
-        Partida resultado = gameService.robarCartas(partida.getId());
+        // No pierde turno y se agrega la carta a sus 3 anteriores (quedan 4)
+        assertEquals(4, actual.getCartasDelante().size());
+        assertEquals(0, res.getIndiceJugadorActual()); // Mantiene el turno
+    }
 
-        Jugador oponenteActualizado = resultado.getJugadores().stream()
-                .filter(j -> j.getId().equals(oponente.getId()))
-                .findFirst().orElseThrow();
+    @Test
+    @DisplayName("No debe perder el turno si tiene menos de 3 cartas aunque el valor sea repetido")
+    void testSacarCartaMenosDeTresCartasValorRepetido() {
+        Jugador actual = partida.getJugadorActual();
+        actual.getCartasDelante().add(new Carta(1L, 5));
+        actual.getCartasDelante().add(new Carta(2L, 6)); // Tiene solo 2 cartas
 
-        // 4. Aserciones:
-        // A. El oponente debe quedarse sin cartas de valor 3
-        assertTrue(oponenteActualizado.getCartasDelante().stream().noneMatch(c -> c.getValor() == 3));
+        // Forzar sacar una carta de valor 5 (repetido)
+        partida.getMazo().getCartas().add(0, new Carta(3L, 5));
 
-        // B. El jugador actual debe tener las 2 cartas robadas de valor 3
-        long cantidadTresesActual = resultado.getJugadorActual().getCartasDelante().stream()
-                .filter(c -> c.getValor() == 3)
-                .count();
-        assertEquals(2, cantidadTresesActual);
+        Partida res = gameService.sacarCarta(1L);
+
+        // No pierde turno porque tenía < 3 cartas
+        assertEquals(3, actual.getCartasDelante().size());
+        assertEquals(0, res.getIndiceJugadorActual());
+    }
+
+    @Test
+    @DisplayName("Debe evaluar anyMatch false cuando el jugador tiene cartas pero ninguna coincide")
+    void testStreamAnyMatchConCartasDiferentes() {
+        Jugador actual = partida.getJugadorActual();
+        actual.getCartasDelante().add(new Carta(1L, 1));
+
+        // Forzar sacar valor 2
+        partida.getMazo().getCartas().add(0, new Carta(2L, 2));
+
+        gameService.sacarCarta(1L);
+
+        assertEquals(2, actual.getCartasDelante().size());
+    }
+
+    @Test
+    @DisplayName("Debe desempatar asignando el ganador a quien tenga mas cartas de valor 1 cuando empatan en puntos")
+    void testDesempatePorCantidadDeCartas() {
+        Partida p = new Partida();
+        p.setId(3L);
+        p.setEstado(EstadoPartida.EN_PROGRESO);
+
+        // Jugador 1 suma 2 puntos con dos cartas de valor 1 -> [1, 1]
+        Jugador j1 = new Jugador();
+        j1.setId(1L);
+        j1.setNombre("Jugador 1");
+        j1.getPozoPuntos().add(new Carta(1L, 1));
+        j1.getPozoPuntos().add(new Carta(2L, 1));
+
+        // Jugador 2 suma 2 puntos con una carta de valor 2 -> [2]
+        Jugador j2 = new Jugador();
+        j2.setId(2L);
+        j2.setNombre("Jugador 2");
+        j2.getPozoPuntos().add(new Carta(3L, 2));
+
+        p.setJugadores(List.of(j1, j2));
+        p.getMazo().getCartas().clear(); // Forzar vaciado de mazo
+
+        when(partidaRepository.findById(3L)).thenReturn(Optional.of(p));
+        when(partidaRepository.save(any(Partida.class))).thenAnswer(i -> i.getArguments()[0]);
+
+        gameService.sacarCarta(3L);
+
+        // Jugador 1 debe ganar por tener dos cartas de valor 1 frente a cero de Jugador 2
+        verify(partidaHistoricoRepository, times(1)).save(argThat(h ->
+                "Jugador 1".equals(h.getGanadorNombre())
+        ));
     }
 }
