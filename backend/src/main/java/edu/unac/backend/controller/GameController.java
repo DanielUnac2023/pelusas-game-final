@@ -25,8 +25,14 @@ public class GameController {
 
     @PostMapping
     public ResponseEntity<GameStatusDTO> crearPartida(@RequestBody List<String> nombresJugadores) {
-        Partida partida = gameService.crearPartida(nombresJugadores);
-        return ResponseEntity.ok(convertirADTO(partida, "Partida creada exitosamente."));
+        try {
+            Partida partida = gameService.crearPartida(nombresJugadores);
+            return ResponseEntity.ok(convertirADTO(partida, "Partida creada exitosamente."));
+        } catch (IllegalArgumentException e) {
+            GameStatusDTO error = new GameStatusDTO();
+            error.setMensajeEvento(e.getMessage());
+            return ResponseEntity.badRequest().body(error);
+        }
     }
 
     @GetMapping("/{id}")

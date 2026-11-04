@@ -22,6 +22,8 @@ public class GameService {
     @Autowired
     private PartidaHistoricoRepository partidaHistoricoRepository;
 
+    private static final int NOMBRE_MIN = 3;
+    private static final int NOMBRE_MAX = 15;
     /**
      * Crea e inicializa una nueva partida de 2 a 6 jugadores.
      */
@@ -36,7 +38,7 @@ public class GameService {
         List<Jugador> jugadores = new ArrayList<>();
         for (String nombre : nombresJugadores) {
             Jugador j = new Jugador();
-            j.setNombre(nombre);
+            j.setNombre(validarNombre(nombre));
             jugadores.add(j);
         }
         partida.setJugadores(jugadores);
@@ -227,6 +229,26 @@ public class GameService {
         if (partida.getEstado() != EstadoPartida.EN_PROGRESO) {
             throw new IllegalStateException("La partida no está en curso.");
         }
+    }
+
+    private String validarNombre(String nombre) {
+        if (nombre == null) {
+            throw new IllegalArgumentException("El nombre del jugador no puede ser nulo.");
+        }
+        String limpio = nombre.trim();
+        if (limpio.length() < NOMBRE_MIN) {
+            throw new IllegalArgumentException(
+                    "El nombre '" + limpio + "' tiene menos de 3 caracteres.");
+        }
+        if (limpio.length() > NOMBRE_MAX) {
+            throw new IllegalArgumentException(
+                    "El nombre '" + limpio + "' tiene más de 15 caracteres.");
+        }
+        if (NombreProhibido.contiene(limpio)) {
+            throw new IllegalArgumentException(
+                    "El nombre '" + limpio + "' no está permitido.");
+        }
+        return limpio;
     }
 
     public List<PartidaHistorico> obtenerHistorial() {
