@@ -34,11 +34,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class GameControllerIntegrationTest {
+class GameControllerTest {
 
     private static final String BASE = "/api/partidas";
     private static final int[] NADA = {};
     private static final String MSG_NO_EN_CURSO = "La partida no está en curso.";
+    private static final String MSG_SIN_CARTAS_PLANTARSE =
+            "Debe sacar al menos una carta antes de poder plantarse.";
 
     @Autowired
     private MockMvc mvc;
@@ -81,6 +83,17 @@ class GameControllerIntegrationTest {
         return guardar(construir(EstadoPartida.EN_PROGRESO, indice, mazo, js));
     }
 
+    /** Partida en la que el jugador actual ya sacó una carta de ese valor en el turno. */
+    private Long sembrarConUltima(int ultima, int indice, int[] mazo, Jugador... js) {
+        Partida p = construir(EstadoPartida.EN_PROGRESO, indice, mazo, js);
+        p.setValorUltimaCarta(ultima);
+        return guardar(p);
+    }
+
+    private Long sembrarFinalizada(Jugador... js) {
+        return guardar(construir(EstadoPartida.FINALIZADA, 0, new int[]{1}, js));
+    }
+
     private static String nombres(int n) {
         return IntStream.rangeClosed(1, n).mapToObj(i -> "\"J" + i + "\"")
                 .collect(Collectors.joining(",", "[", "]"));
@@ -92,6 +105,12 @@ class GameControllerIntegrationTest {
 
     private ResultActions ok(MockHttpServletRequestBuilder req) throws Exception {
         return mvc.perform(req).andExpect(status().isOk());
+    }
+
+    private ResultActions badRequest(MockHttpServletRequestBuilder req, String mensaje) throws Exception {
+        return mvc.perform(req)
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.mensajeEvento").value(mensaje));
     }
 
     private void assertFalla(MockHttpServletRequestBuilder req, Class<? extends Throwable> tipo, String msg) {
@@ -127,7 +146,13 @@ class GameControllerIntegrationTest {
                 .andExpect(jsonPath("$.accionesPermitidas[0]").value("SACAR_CARTA"))
                 .andExpect(jsonPath("$.accionesPermitidas[1]").value("PLANTARSE"))
                 .andExpect(jsonPath("$.accionesPermitidas[2]").value("GUARDAR_PELUSAS"))
-                .andExpect(jsonPath("$.accionesPermitidas[3]").value("ROBAR"));
+                .andExpect(jsonPath("$.accionesPermitidas[3]").value("ROBAR"))
+                .andExpect(jsonPath("$.jugadores.length()").value(2))
+                .andExpect(jsonPath("$.jugadores[0].id").isNumber())
+                .andExpect(jsonPath("$.jugadores[0].nombre").value("Ana"))
+                .andExpect(jsonPath("$.jugadores[0].cartasDelante.length()").value(0))
+                .andExpect(jsonPath("$.jugadores[0].puntosTotales").value(0))
+                .andExpect(jsonPath("$.jugadores[1].nombre").value("Beto"));
 
         assertThat(partidaRepository.count()).isEqualTo(1);
     }
@@ -205,34 +230,42 @@ class GameControllerIntegrationTest {
                 .andExpect(jsonPath("$.cartasRestantesMazo").value(1));
     }
 
-    // ------------------------------------------------------------------ validaciones comunes
+    // ------------------------------------------------------------------ partida inexistente / no en curso
 
     @ParameterizedTest
-    @ValueSource(strings = {"guardar", "sacar", "robar?valorCarta=1", "plantarse"})
+    @ValueSource(strings = {"guardar", "sacar", "robar", "plantarse"})
     void accionesSobrePartidaInexistenteFallan(String accion) {
         assertFalla(post(BASE + "/999999/" + accion), IllegalArgumentException.class,
                 "La partida con ID 999999 no existe.");
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"guardar", "sacar", "robar?valorCarta=1", "plantarse"})
-    void accionesSobrePartidaFinalizadaFallan(String accion) {
-        Long id = guardar(construir(EstadoPartida.FINALIZADA, 0, new int[]{1},
-                jugador("Ana", NADA, NADA), jugador("Beto", NADA, NADA)));
-        assertFalla(post(BASE + "/" + id + "/" + accion), IllegalStateException.class, MSG_NO_EN_CURSO);
+    @ValueSource(strings = {"guardar", "robar"})
+    void guardarYRobarSobrePartidaFinalizadaDevuelven400(String accion) throws Exception {
+        Long id = sembrarFinalizada(jugador("Ana", new int[]{2}, NADA), jugador("Beto", NADA, NADA));
+
+        badRequest(post(BASE + "/" + id + "/" + accion), MSG_NO_EN_CURSO)
+                .andExpect(jsonPath("$.estadoPartida").value("FINALIZADA"))
+                .andExpect(jsonPath("$.jugadores[0].cartasDelante.length()").value(1));
     }
 
     @Test
-    void accionesSobrePartidaCreadaFallan() {
-        Long id = guardar(construir(EstadoPartida.CREADA, 0, new int[]{1},
-                jugador("Ana", NADA, NADA), jugador("Beto", NADA, NADA)));
+    void sacarSobrePartidaFinalizadaLanzaError() {
+        Long id = sembrarFinalizada(jugador("Ana", NADA, NADA), jugador("Beto", NADA, NADA));
+        assertFalla(post(BASE + "/" + id + "/sacar"), IllegalStateException.class, MSG_NO_EN_CURSO);
+    }
+
+    @Test
+    void plantarseSobrePartidaFinalizadaConCartasLanzaError() {
+        Long id = sembrarFinalizada(jugador("Ana", new int[]{3}, NADA), jugador("Beto", NADA, NADA));
         assertFalla(post(BASE + "/" + id + "/plantarse"), IllegalStateException.class, MSG_NO_EN_CURSO);
     }
 
     @Test
-    void robar_sinParametroValorCartaDevuelve400() throws Exception {
-        Long id = sembrar(0, NADA, jugador("Ana", NADA, NADA), jugador("Beto", NADA, NADA));
-        mvc.perform(post(BASE + "/" + id + "/robar")).andExpect(status().isBadRequest());
+    void plantarseSobrePartidaCreadaConCartasLanzaError() {
+        Long id = guardar(construir(EstadoPartida.CREADA, 0, new int[]{1},
+                jugador("Ana", new int[]{3}, NADA), jugador("Beto", NADA, NADA)));
+        assertFalla(post(BASE + "/" + id + "/plantarse"), IllegalStateException.class, MSG_NO_EN_CURSO);
     }
 
     // ------------------------------------------------------------------ guardar pelusas
@@ -257,19 +290,25 @@ class GameControllerIntegrationTest {
     }
 
     @Test
-    void guardar_sinCartasDelanteNoCambiaNada() throws Exception {
+    void guardar_sinCartasDelanteDevuelve400() throws Exception {
         Long id = sembrar(0, new int[]{1},
                 jugador("Ana", NADA, new int[]{4}), jugador("Beto", NADA, NADA));
 
-        ok(post(BASE + "/" + id + "/guardar"))
-                .andExpect(jsonPath("$.jugadores[0].puntosTotales").value(4))
-                .andExpect(jsonPath("$.jugadores[0].cartasDelante.length()").value(0));
+        badRequest(post(BASE + "/" + id + "/guardar"), "No tienes cartas delante para guardar.")
+                .andExpect(jsonPath("$.estadoPartida").value("EN_PROGRESO"))
+                .andExpect(jsonPath("$.nombreJugadorActual").value("Ana"))
+                .andExpect(jsonPath("$.jugadores[0].puntosTotales").value(4));
     }
 
     @Test
-    void guardar_sinJugadoresResponde200() throws Exception {
-        Long id = sembrar(0, new int[]{1});
-        ok(post(BASE + "/" + id + "/guardar"));
+    void guardar_despuesDeSacarUnaCartaDevuelve400() throws Exception {
+        Long id = sembrarConUltima(5, 0, new int[]{1},
+                jugador("Ana", new int[]{5}, NADA), jugador("Beto", NADA, NADA));
+
+        badRequest(post(BASE + "/" + id + "/guardar"),
+                "Solo puedes guardar al inicio del turno, antes de sacar una carta.")
+                .andExpect(jsonPath("$.jugadores[0].cartasDelante.length()").value(1))
+                .andExpect(jsonPath("$.jugadores[0].puntosTotales").value(0));
     }
 
     // ------------------------------------------------------------------ sacar carta
@@ -372,51 +411,28 @@ class GameControllerIntegrationTest {
     }
 
     @Test
-    @DisplayName("POST /api/partidas/{id}/robar - Robar cartas exitosamente")
-    void testRobarCartasExitoso() throws Exception {
-        when(gameService.robarCartas(eq(1L))).thenReturn(partidaEjemplo);
+    void sacar_sinJugadoresYMazoVacioTerminaEnEmpateTotal() throws Exception {
+        finalizarConMazoVacio();
 
-        mockMvc.perform(post("/api/partidas/1/robar")
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.mensajeEvento").value("Cartas robadas a rivales con éxito."));
-    }
-
-    @Test
-    @DisplayName("POST /api/partidas/{id}/robar - Retorna HTTP 400 cuando ocurre una excepción de negocio")
-    void testRobarCartasSinCartaARobar() throws Exception {
-        // 1. Simular la excepción lanzada por el servicio
-        when(gameService.robarCartas(eq(1L)))
-                .thenThrow(new IllegalStateException("Debes sacar una carta primero para poder robar."));
-
-        // 2. Simular obtenerPartida para que el catch cree el DTO correctamente
-        when(gameService.obtenerPartida(eq(1L))).thenReturn(partidaEjemplo);
-
-        // 3. Verificar status 400 Bad Request y mensaje en el DTO
-        mockMvc.perform(post("/api/partidas/1/robar")
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.mensajeEvento").value("Debes sacar una carta primero para poder robar."));
+        PartidaHistorico h = unicoHistorico();
+        assertThat(h.getGanadorNombre()).isEqualTo("Empate Total");
+        assertThat(h.getGanadorPuntaje()).isZero();
+        assertThat(h.getResumenJugadores()).isEmpty();
     }
 
     // ------------------------------------------------------------------ desempate
 
     @Test
-    @DisplayName("POST /api/partidas/{id}/plantarse - Plantarse")
-    void testPlantarse() throws Exception {
-        // 1. Asegurar que el jugador actual tenga al menos una carta para no activar el Bad Request
-        Jugador jugadorActual = partidaEjemplo.getJugadorActual();
-        jugadorActual.getCartasDelante().add(new Carta(1L, 5));
+    void desempate_gananteMasCartasDeValorBajo() throws Exception {
+        finalizarConMazoVacio(
+                jugador("Ana", NADA, new int[]{5, 5}),
+                jugador("Beto", NADA, new int[]{4, 6}));
 
-        // 2. Configurar los mocks del servicio
-        when(gameService.obtenerPartida(eq(1L))).thenReturn(partidaEjemplo);
-        when(gameService.plantarse(eq(1L))).thenReturn(partidaEjemplo);
-
-        // 3. Ejecutar la petición HTTP y validar respuesta 200 OK
-        mockMvc.perform(post("/api/partidas/1/plantarse")
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.mensajeEvento").value("Jugador se ha plantado. Cambiando de turno."));
+        PartidaHistorico h = unicoHistorico();
+        assertThat(h.getGanadorNombre()).isEqualTo("Beto");
+        assertThat(h.getGanadorPuntaje()).isEqualTo(10);
+        assertThat(h.getResumenJugadores())
+                .isEqualTo("Ana (10 pts - Cartas: [5, 5]), Beto (10 pts - Cartas: [6, 4])");
     }
 
     @Test
@@ -451,14 +467,33 @@ class GameControllerIntegrationTest {
     // ------------------------------------------------------------------ robar
 
     @Test
-    void robar_tomaCartasDelValorIndicadoDeLosOponentes() throws Exception {
+    void robar_sinSacarCartaPrimeroDevuelve400() throws Exception {
         Long id = sembrar(0, new int[]{1},
+                jugador("Ana", NADA, NADA), jugador("Beto", new int[]{3}, NADA));
+
+        badRequest(post(BASE + "/" + id + "/robar"), "Debes sacar una carta primero para poder robar.")
+                .andExpect(jsonPath("$.jugadores[0].cartasDelante.length()").value(0))
+                .andExpect(jsonPath("$.jugadores[1].cartasDelante.length()").value(1));
+    }
+
+    @Test
+    void robar_sinJugadorActualDevuelve400() throws Exception {
+        Long id = sembrarConUltima(3, 0, new int[]{1});
+
+        badRequest(post(BASE + "/" + id + "/robar"), "No se pudo identificar al jugador actual.")
+                .andExpect(jsonPath("$.nombreJugadorActual").doesNotExist())
+                .andExpect(jsonPath("$.jugadores.length()").value(0));
+    }
+
+    @Test
+    void robar_tomaCartasDelValorUltimoDeLosOponentes() throws Exception {
+        Long id = sembrarConUltima(3, 0, new int[]{1},
                 jugador("Ana", NADA, NADA),
                 jugador("Beto", new int[]{3, 5, 3}, NADA),
                 jugador("Caro", new int[]{3}, NADA));
 
-        ok(post(BASE + "/" + id + "/robar?valorCarta=3"))
-                .andExpect(jsonPath("$.mensajeEvento").value("Cartas robadas a rivales."))
+        ok(post(BASE + "/" + id + "/robar"))
+                .andExpect(jsonPath("$.mensajeEvento").value("Cartas robadas a rivales con éxito."))
                 .andExpect(jsonPath("$.jugadores[0].cartasDelante.length()").value(3))
                 .andExpect(jsonPath("$.jugadores[0].cartasDelante[0].valor").value(3))
                 .andExpect(jsonPath("$.jugadores[1].cartasDelante.length()").value(1))
@@ -467,35 +502,61 @@ class GameControllerIntegrationTest {
 
         ok(get(BASE + "/" + id))
                 .andExpect(jsonPath("$.jugadores[0].cartasDelante.length()").value(3))
+                .andExpect(jsonPath("$.jugadores[1].cartasDelante.length()").value(1))
                 .andExpect(jsonPath("$.jugadores[2].cartasDelante.length()").value(0));
     }
 
     @Test
     void robar_noTocaLasCartasDelPropioJugador() throws Exception {
-        Long id = sembrar(0, new int[]{1},
-                jugador("Ana", new int[]{3}, NADA), jugador("Beto", new int[]{3}, NADA));
+        // Ana tiene dos 3: si el servicio no se saltara a sí misma, fallaría al iterar su propia lista.
+        Long id = sembrarConUltima(3, 0, new int[]{1},
+                jugador("Ana", new int[]{3, 3}, NADA), jugador("Beto", new int[]{3}, NADA));
 
-        ok(post(BASE + "/" + id + "/robar?valorCarta=3"))
-                .andExpect(jsonPath("$.jugadores[0].cartasDelante.length()").value(2))
+        ok(post(BASE + "/" + id + "/robar"))
+                .andExpect(jsonPath("$.jugadores[0].cartasDelante.length()").value(3))
                 .andExpect(jsonPath("$.jugadores[1].cartasDelante.length()").value(0));
     }
 
     @Test
-    void robar_sinCoincidenciasNoCambiaNada() throws Exception {
-        Long id = sembrar(0, new int[]{1},
+    void robar_sinCoincidenciasDevuelve400YNoCambiaNada() throws Exception {
+        Long id = sembrarConUltima(9, 0, new int[]{1},
                 jugador("Ana", NADA, NADA), jugador("Beto", new int[]{3}, NADA));
 
-        ok(post(BASE + "/" + id + "/robar?valorCarta=9"))
+        badRequest(post(BASE + "/" + id + "/robar"),
+                "No hay cartas de valor 9 para robar a ningún oponente.")
                 .andExpect(jsonPath("$.jugadores[0].cartasDelante.length()").value(0))
                 .andExpect(jsonPath("$.jugadores[1].cartasDelante.length()").value(1));
+    }
+
+    @Test
+    void sacarYLuegoRobar_usaElValorDeLaCartaSacada() throws Exception {
+        Long id = sembrar(0, new int[]{3, 1},
+                jugador("Ana", NADA, NADA), jugador("Beto", new int[]{3}, NADA));
+
+        ok(post(BASE + "/" + id + "/sacar"))
+                .andExpect(jsonPath("$.jugadores[0].cartasDelante.length()").value(1));
+
+        ok(post(BASE + "/" + id + "/robar"))
+                .andExpect(jsonPath("$.jugadores[0].cartasDelante.length()").value(2))
+                .andExpect(jsonPath("$.jugadores[1].cartasDelante.length()").value(0));
     }
 
     // ------------------------------------------------------------------ plantarse
 
     @Test
+    void plantarse_sinCartasDelanteDevuelve400() throws Exception {
+        Long id = sembrar(0, new int[]{1},
+                jugador("Ana", NADA, NADA), jugador("Beto", new int[]{3}, NADA));
+
+        badRequest(post(BASE + "/" + id + "/plantarse"), MSG_SIN_CARTAS_PLANTARSE)
+                .andExpect(jsonPath("$.jugadorActualIndex").value(0))
+                .andExpect(jsonPath("$.nombreJugadorActual").value("Ana"));
+    }
+
+    @Test
     void plantarse_avanzaTurnoYDaLaVuelta() throws Exception {
         Long id = sembrar(0, new int[]{1},
-                jugador("Ana", NADA, NADA), jugador("Beto", NADA, NADA));
+                jugador("Ana", new int[]{3}, NADA), jugador("Beto", new int[]{4}, NADA));
 
         ok(post(BASE + "/" + id + "/plantarse"))
                 .andExpect(jsonPath("$.mensajeEvento").value("Jugador se ha plantado. Cambiando de turno."))
@@ -510,16 +571,10 @@ class GameControllerIntegrationTest {
     @Test
     void plantarse_desdeElUltimoDeTresVuelveAlPrimero() throws Exception {
         Long id = sembrar(2, new int[]{1},
-                jugador("Ana", NADA, NADA), jugador("Beto", NADA, NADA), jugador("Caro", NADA, NADA));
+                jugador("Ana", NADA, NADA), jugador("Beto", NADA, NADA), jugador("Caro", new int[]{6}, NADA));
 
         ok(post(BASE + "/" + id + "/plantarse"))
                 .andExpect(jsonPath("$.jugadorActualIndex").value(0));
-    }
-
-    @Test
-    void plantarse_sinJugadoresMantieneIndice() throws Exception {
-        Long id = sembrar(0, new int[]{1});
-        ok(post(BASE + "/" + id + "/plantarse")).andExpect(jsonPath("$.jugadorActualIndex").value(0));
     }
 
     // ------------------------------------------------------------------ histórico
