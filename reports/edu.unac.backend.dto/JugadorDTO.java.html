@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+
+
+<h1>JugadorDTO.java</h1>
+
+<table class="src">
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@580ffea_1'/>
+1
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@580ffea_1'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>package edu.unac.backend.dto;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@580ffea_2'/>
+2
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@580ffea_2'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@580ffea_3'/>
+3
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@580ffea_3'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import edu.unac.backend.model.Carta;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@580ffea_4'/>
+4
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@580ffea_4'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.util.List;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@580ffea_5'/>
+5
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@580ffea_5'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@580ffea_6'/>
+6
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@580ffea_6'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>public class JugadorDTO {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@580ffea_7'/>
+7
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@580ffea_7'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private Long id;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@580ffea_8'/>
+8
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@580ffea_8'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private String nombre;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@580ffea_9'/>
+9
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@580ffea_9'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private List&#60;Carta&#62; cartasDelante;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@580ffea_10'/>
+10
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@580ffea_10'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private int puntosTotales;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@580ffea_11'/>
+11
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@580ffea_11'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@580ffea_12'/>
+12
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@580ffea_12'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    public JugadorDTO() {}</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@580ffea_13'/>
+13
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@580ffea_13'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@580ffea_14'/>
+14
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@580ffea_14'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    public JugadorDTO(Long id, String nombre, List&#60;Carta&#62; cartasDelante, int puntosTotales) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@580ffea_15'/>
+15
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@580ffea_15'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        this.id = id;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@580ffea_16'/>
+16
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@580ffea_16'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        this.nombre = nombre;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@580ffea_17'/>
+17
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@580ffea_17'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        this.cartasDelante = cartasDelante;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@580ffea_18'/>
+18
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@580ffea_18'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        this.puntosTotales = puntosTotales;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@580ffea_19'/>
+19
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@580ffea_19'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@580ffea_20'/>
+20
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@580ffea_20'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@580ffea_21'/>
+21
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@580ffea_21'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    // Getters y Setters</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@580ffea_22'/>
+22
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@580ffea_22'>1</a>
+<span>
+
+1. getId : replaced Long return value with 0L for edu/unac/backend/dto/JugadorDTO::getId &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>    public Long getId() { return id; }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@580ffea_23'/>
+23
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@580ffea_23'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    public void setId(Long id) { this.id = id; }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@580ffea_24'/>
+24
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@580ffea_24'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@580ffea_25'/>
+25
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@580ffea_25'>1</a>
+<span>
+
+1. getNombre : replaced return value with &#34;&#34; for edu/unac/backend/dto/JugadorDTO::getNombre &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>    public String getNombre() { return nombre; }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@580ffea_26'/>
+26
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@580ffea_26'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    public void setNombre(String nombre) { this.nombre = nombre; }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@580ffea_27'/>
+27
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@580ffea_27'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@580ffea_28'/>
+28
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@580ffea_28'>1</a>
+<span>
+
+1. getCartasDelante : replaced return value with Collections.emptyList for edu/unac/backend/dto/JugadorDTO::getCartasDelante &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>    public List&#60;Carta&#62; getCartasDelante() { return cartasDelante; }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@580ffea_29'/>
+29
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@580ffea_29'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    public void setCartasDelante(List&#60;Carta&#62; cartasDelante) { this.cartasDelante = cartasDelante; }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@580ffea_30'/>
+30
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@580ffea_30'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@580ffea_31'/>
+31
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@580ffea_31'>1</a>
+<span>
+
+1. getPuntosTotales : replaced int return with 0 for edu/unac/backend/dto/JugadorDTO::getPuntosTotales &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>    public int getPuntosTotales() { return puntosTotales; }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@580ffea_32'/>
+32
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@580ffea_32'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    public void setPuntosTotales(int puntosTotales) { this.puntosTotales = puntosTotales; }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@580ffea_33'/>
+33
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@580ffea_33'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>}</span></pre></td></tr>
+
+
+
+<tr><td></td><td></td><td><h2>Mutations</h2></td></tr>
+
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@580ffea_22'>22</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@580ffea_22'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getId<br/><b>Killed by : </b>edu.unac.backend.model.ModelosSimplesTest.[engine:junit-jupiter]/[class:edu.unac.backend.model.ModelosSimplesTest]/[method:jugadorDtoConstructoresYAccesores()]</span></span> replaced Long return value with 0L for edu/unac/backend/dto/JugadorDTO::getId &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@580ffea_25'>25</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@580ffea_25'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getNombre<br/><b>Killed by : </b>edu.unac.backend.model.ModelosSimplesTest.[engine:junit-jupiter]/[class:edu.unac.backend.model.ModelosSimplesTest]/[method:jugadorDtoConstructoresYAccesores()]</span></span> replaced return value with &#34;&#34; for edu/unac/backend/dto/JugadorDTO::getNombre &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@580ffea_28'>28</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@580ffea_28'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getCartasDelante<br/><b>Killed by : </b>edu.unac.backend.model.ModelosSimplesTest.[engine:junit-jupiter]/[class:edu.unac.backend.model.ModelosSimplesTest]/[method:jugadorDtoConstructoresYAccesores()]</span></span> replaced return value with Collections.emptyList for edu/unac/backend/dto/JugadorDTO::getCartasDelante &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@580ffea_31'>31</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@580ffea_31'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getPuntosTotales<br/><b>Killed by : </b>edu.unac.backend.model.ModelosSimplesTest.[engine:junit-jupiter]/[class:edu.unac.backend.model.ModelosSimplesTest]/[method:jugadorDtoConstructoresYAccesores()]</span></span> replaced int return with 0 for edu/unac/backend/dto/JugadorDTO::getPuntosTotales &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+</table>
+
+
+<h2>Active mutators</h2>
+<ul>
+
+<li class='mutator'>CONDITIONALS_BOUNDARY</li>
+
+<li class='mutator'>EMPTY_RETURNS</li>
+
+<li class='mutator'>FALSE_RETURNS</li>
+
+<li class='mutator'>INCREMENTS</li>
+
+<li class='mutator'>INVERT_NEGS</li>
+
+<li class='mutator'>MATH</li>
+
+<li class='mutator'>NEGATE_CONDITIONALS</li>
+
+<li class='mutator'>NULL_RETURNS</li>
+
+<li class='mutator'>PRIMITIVE_RETURNS</li>
+
+<li class='mutator'>TRUE_RETURNS</li>
+
+<li class='mutator'>VOID_METHOD_CALLS</li>
+
+</ul>
+
+<h2>Tests examined</h2>
+<ul>
+<li>edu.unac.backend.model.ModelosSimplesTest.[engine:junit-jupiter]/[class:edu.unac.backend.model.ModelosSimplesTest]/[method:jugadorDtoConstructoresYAccesores()] (1 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[test-template:guardarYRobarSobrePartidaFinalizadaDevuelven400(java.lang.String)]/[test-template-invocation:#1] (25 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:guardar_despuesDeSacarUnaCartaDevuelve400()] (24 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:robar_noTocaLasCartasDelPropioJugador()] (27 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:obtenerPartida_sinMazoDevuelveCeroCartas()] (32 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:robar_sinCoincidenciasDevuelve400YNoCambiaNada()] (34 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:sacar_agregaLaCartaAlJugadorActual()] (39 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:desempate_empateTotalEligeUnoDeLosJugadores()] (31 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:plantarse_desdeElUltimoDeTresVuelveAlPrimero()] (44 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:sacar_conSoloDosCartasYValorRepetidoNoPierdeTurno()] (42 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:guardar_muevePelusasAlPozo()] (41 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[test-template:guardarYRobarSobrePartidaFinalizadaDevuelven400(java.lang.String)]/[test-template-invocation:#2] (46 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:sacar_conMazoVacioFinalizaYConsolidaCartasDeLaMesa()] (36 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:guardar_sinCartasDelanteDevuelve400()] (48 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:sacar_conTresCartasYValorNuevoNoPierdeTurno()] (47 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:robar_tomaCartasDelValorUltimoDeLosOponentes()] (44 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:obtenerPartida_mapeaTodosLosCampos()] (51 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:desempate_decididoEnElValorUno()] (42 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:plantarse_avanzaTurnoYDaLaVuelta()] (52 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:desempate_ordenInversoDeJugadores()] (43 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:sacar_ultimaCartaFinalizaYRegistraHistorico()] (47 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:sacarYLuegoRobar_usaElValorDeLaCartaSacada()] (59 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:robar_sinSacarCartaPrimeroDevuelve400()] (69 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:sacar_pierdeTurnoConTresCartasYValorRepetido()] (73 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:crearPartida_devuelveEstadoInicialCompleto()] (74 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:plantarse_sinCartasDelanteDevuelve400()] (91 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:desempate_gananteMasCartasDeValorBajo()] (93 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:sacar_perderTurnoConLaUltimaCartaFinalizaEnLaSiguienteLlamada()] (124 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[test-template:crearPartida_aceptaLimitesDeJugadores(java.lang.String)]/[test-template-invocation:#2] (188 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[test-template:crearPartida_aceptaLimitesDeJugadores(java.lang.String)]/[test-template-invocation:#1] (207 ms)</li>
+</ul>
+
+<br/>
+
+Report generated by <a href='https://pitest.org'>PIT</a> 1.30.0 <a href='https://github.com/sponsors/hcoles'>support</a>
+
+</body>
+</html>

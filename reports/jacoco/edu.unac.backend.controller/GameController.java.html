@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GameController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">backend</a> &gt; <a href="index.source.html" class="el_package">edu.unac.backend.controller</a> &gt; <span class="el_source">GameController.java</span></div><h1>GameController.java</h1><pre class="source lang-java linenums">package edu.unac.backend.controller;
+
+import edu.unac.backend.dto.GameStatusDTO;
+import edu.unac.backend.dto.JugadorDTO;
+import edu.unac.backend.model.Jugador;
+import edu.unac.backend.model.Partida;
+import edu.unac.backend.service.GameService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import edu.unac.backend.model.PartidaHistorico;
+import edu.unac.backend.repository.PartidaHistoricoRepository;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@RestController
+@RequestMapping(&quot;/api/partidas&quot;)
+@CrossOrigin(origins = &quot;*&quot;) // Permite la comunicación fluida con el frontend en Vue 3
+<span class="fc" id="L21">public class GameController {</span>
+
+    @Autowired
+    private GameService gameService;
+
+    @PostMapping
+    public ResponseEntity&lt;GameStatusDTO&gt; crearPartida(@RequestBody List&lt;String&gt; nombresJugadores) {
+        try {
+<span class="fc" id="L29">            Partida partida = gameService.crearPartida(nombresJugadores);</span>
+<span class="fc" id="L30">            return ResponseEntity.ok(convertirADTO(partida, &quot;Partida creada exitosamente.&quot;));</span>
+<span class="fc" id="L31">        } catch (IllegalArgumentException e) {</span>
+<span class="fc" id="L32">            GameStatusDTO error = new GameStatusDTO();</span>
+<span class="fc" id="L33">            error.setMensajeEvento(e.getMessage());</span>
+<span class="fc" id="L34">            return ResponseEntity.badRequest().body(error);</span>
+        }
+    }
+
+    @GetMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;GameStatusDTO&gt; obtenerPartida(@PathVariable Long id) {
+<span class="fc" id="L40">        Partida partida = gameService.obtenerPartida(id);</span>
+<span class="fc" id="L41">        return ResponseEntity.ok(convertirADTO(partida, &quot;Estado actual de la partida.&quot;));</span>
+    }
+
+    @PostMapping(&quot;/{id}/guardar&quot;)
+    public ResponseEntity&lt;GameStatusDTO&gt; guardarPelusas(@PathVariable Long id) {
+        try {
+<span class="fc" id="L47">            Partida partida = gameService.guardarPelusas(id);</span>
+<span class="fc" id="L48">            return ResponseEntity.ok(convertirADTO(partida, &quot;Pelusas guardadas en el pozo seguro.&quot;));</span>
+<span class="fc" id="L49">        } catch (IllegalStateException e) {</span>
+<span class="fc" id="L50">            Partida partidaActual = gameService.obtenerPartida(id);</span>
+<span class="fc" id="L51">            return ResponseEntity.badRequest().body(convertirADTO(partidaActual, e.getMessage()));</span>
+        }
+    }
+
+    @PostMapping(&quot;/{id}/sacar&quot;)
+    public ResponseEntity&lt;GameStatusDTO&gt; sacarCarta(@PathVariable Long id) {
+<span class="fc" id="L57">        Partida partida = gameService.sacarCarta(id);</span>
+<span class="fc" id="L58">        return ResponseEntity.ok(convertirADTO(partida, &quot;Carta sacada del mazo.&quot;));</span>
+    }
+
+    @PostMapping(&quot;/{id}/robar&quot;)
+    public ResponseEntity&lt;GameStatusDTO&gt; robarCartas(@PathVariable Long id) {
+        try {
+<span class="fc" id="L64">            Partida partida = gameService.robarCartas(id);</span>
+<span class="fc" id="L65">            return ResponseEntity.ok(convertirADTO(partida, &quot;Cartas robadas a rivales con éxito.&quot;));</span>
+<span class="fc" id="L66">        } catch (IllegalStateException e) {</span>
+            // e.getMessage() toma exactamente &quot;Debes sacar una carta primero para poder robar.&quot;
+            // o &quot;No hay cartas de valor X para robar a ningún oponente.&quot; según la función original.
+<span class="fc" id="L69">            Partida partidaActual = gameService.obtenerPartida(id);</span>
+<span class="fc" id="L70">            return ResponseEntity.badRequest().body(convertirADTO(partidaActual, e.getMessage()));</span>
+        }
+    }
+
+    @PostMapping(&quot;/{id}/plantarse&quot;)
+    public ResponseEntity&lt;GameStatusDTO&gt; plantarse(@PathVariable Long id) {
+<span class="fc" id="L76">        Partida partida = gameService.obtenerPartida(id);</span>
+<span class="fc" id="L77">        Jugador jugadorActual = partida.getJugadorActual();</span>
+
+        // Validar que el jugador haya sacado al menos una carta en este turno
+<span class="fc bfc" id="L80" title="All 2 branches covered.">        boolean haSacadoAlMenosUnaCarta = !jugadorActual.getCartasDelante().isEmpty();</span>
+
+<span class="fc bfc" id="L82" title="All 2 branches covered.">        if (!haSacadoAlMenosUnaCarta) {</span>
+<span class="fc" id="L83">            return ResponseEntity.badRequest()</span>
+<span class="fc" id="L84">                    .body(convertirADTO(partida, &quot;Debe sacar al menos una carta antes de poder plantarse.&quot;));</span>
+        }
+
+<span class="fc" id="L87">        Partida partidaActualizada = gameService.plantarse(id);</span>
+<span class="fc" id="L88">        return ResponseEntity.ok(convertirADTO(partidaActualizada, &quot;Jugador se ha plantado. Cambiando de turno.&quot;));</span>
+    }
+
+    /**
+     * Mapeador helper de la Entidad Partida al GameStatusDTO que consume el
+     * frontend.
+     */
+    private GameStatusDTO convertirADTO(Partida partida, String mensaje) {
+<span class="fc" id="L96">        GameStatusDTO dto = new GameStatusDTO();</span>
+<span class="fc" id="L97">        dto.setIdPartida(partida.getId());</span>
+<span class="fc" id="L98">        dto.setEstadoPartida(partida.getEstado());</span>
+
+<span class="fc bfc" id="L100" title="All 2 branches covered.">        if (partida.getMazo() != null) {</span>
+<span class="fc" id="L101">            dto.setCartasRestantesMazo(partida.getMazo().getCantidadRestante());</span>
+        }
+
+<span class="fc" id="L104">        dto.setJugadorActualIndex(partida.getIndiceJugadorActual());</span>
+
+<span class="fc" id="L106">        Jugador actual = partida.getJugadorActual();</span>
+<span class="fc bfc" id="L107" title="All 2 branches covered.">        if (actual != null) {</span>
+<span class="fc" id="L108">            dto.setNombreJugadorActual(actual.getNombre());</span>
+        }
+
+<span class="fc" id="L111">        dto.setMensajeEvento(mensaje);</span>
+
+        // Definición de acciones permitidas para el cliente delgado
+<span class="fc" id="L114">        List&lt;String&gt; acciones = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L115">        acciones.add(&quot;SACAR_CARTA&quot;);</span>
+<span class="fc" id="L116">        acciones.add(&quot;PLANTARSE&quot;);</span>
+<span class="fc" id="L117">        acciones.add(&quot;GUARDAR_PELUSAS&quot;);</span>
+<span class="fc" id="L118">        acciones.add(&quot;ROBAR&quot;);</span>
+<span class="fc" id="L119">        dto.setAccionesPermitidas(acciones);</span>
+
+        // Mapeo de la lista de jugadores a JugadorDTO
+<span class="fc" id="L122">        List&lt;JugadorDTO&gt; jugadorDTOs = partida.getJugadores().stream().map(j -&gt; {</span>
+<span class="fc" id="L123">            int puntos = j.getPozoPuntos().stream().mapToInt(c -&gt; c.getValor()).sum();</span>
+<span class="fc" id="L124">            return new JugadorDTO(j.getId(), j.getNombre(), j.getCartasDelante(), puntos);</span>
+<span class="fc" id="L125">        }).collect(Collectors.toList());</span>
+
+<span class="fc" id="L127">        dto.setJugadores(jugadorDTOs);</span>
+
+<span class="fc" id="L129">        return dto;</span>
+    }
+
+    @GetMapping(&quot;/historico&quot;)
+    public ResponseEntity&lt;List&lt;PartidaHistorico&gt;&gt; obtenerHistorial() {
+<span class="fc" id="L134">        List&lt;PartidaHistorico&gt; historial = gameService.obtenerHistorial();</span>
+<span class="fc" id="L135">        return ResponseEntity.ok(historial);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

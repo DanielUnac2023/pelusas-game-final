@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GameService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">backend</a> &gt; <a href="index.source.html" class="el_package">edu.unac.backend.service</a> &gt; <span class="el_source">GameService.java</span></div><h1>GameService.java</h1><pre class="source lang-java linenums">package edu.unac.backend.service;
+
+import edu.unac.backend.model.*;
+import edu.unac.backend.repository.PartidaHistoricoRepository;
+import edu.unac.backend.repository.PartidaRepository;
+import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import java.util.stream.Collectors;
+import java.util.ArrayList;
+
+import java.time.LocalDateTime;
+import java.util.*;
+import java.util.stream.Collectors;
+
+@Service
+<span class="fc" id="L17">public class GameService {</span>
+
+    @Autowired
+    private PartidaRepository partidaRepository;
+
+    @Autowired
+    private PartidaHistoricoRepository partidaHistoricoRepository;
+
+    private static final int NOMBRE_MIN = 3;
+    private static final int NOMBRE_MAX = 15;
+    /**
+     * Crea e inicializa una nueva partida de 2 a 6 jugadores.
+     */
+    public Partida crearPartida(List&lt;String&gt; nombresJugadores) {
+<span class="fc bfc" id="L31" title="All 6 branches covered.">        if (nombresJugadores == null || nombresJugadores.size() &lt; 2 || nombresJugadores.size() &gt; 6) {</span>
+<span class="fc" id="L32">            throw new IllegalArgumentException(&quot;La partida debe tener entre 2 y 6 jugadores.&quot;);</span>
+        }
+
+<span class="fc" id="L35">        Partida partida = new Partida();</span>
+<span class="fc" id="L36">        partida.setEstado(EstadoPartida.EN_PROGRESO);</span>
+
+<span class="fc" id="L38">        List&lt;Jugador&gt; jugadores = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L39" title="All 2 branches covered.">        for (String nombre : nombresJugadores) {</span>
+<span class="fc" id="L40">            Jugador j = new Jugador();</span>
+<span class="fc" id="L41">            j.setNombre(validarNombre(nombre));</span>
+<span class="fc" id="L42">            jugadores.add(j);</span>
+<span class="fc" id="L43">        }</span>
+<span class="fc" id="L44">        partida.setJugadores(jugadores);</span>
+<span class="fc" id="L45">        partida.getMazo().mezclar();</span>
+
+<span class="fc" id="L47">        return partidaRepository.save(partida);</span>
+    }
+
+    /**
+     * Paso 1 — Guardar Pelusas:
+     * Traslada las cartas acumuladas de turnos anteriores (cartasDelante)
+     * al pozo seguro de puntos (pozoPuntos).
+     */
+    public Partida guardarPelusas(Long idPartida) {
+<span class="fc" id="L56">        Partida partida = obtenerPartida(idPartida);</span>
+<span class="fc" id="L57">        validarPartidaEnProgreso(partida);</span>
+
+<span class="fc bfc" id="L59" title="All 2 branches covered.">        if (partida.getValorUltimaCarta() != null) {</span>
+<span class="fc" id="L60">            throw new IllegalStateException(&quot;Solo puedes guardar al inicio del turno, antes de sacar una carta.&quot;);</span>
+        }
+
+<span class="fc" id="L63">        Jugador actual = partida.getJugadorActual();</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">        if (actual.getCartasDelante().isEmpty()) {</span>
+<span class="fc" id="L65">            throw new IllegalStateException(&quot;No tienes cartas delante para guardar.&quot;);</span>
+        }
+
+<span class="fc" id="L68">        actual.getPozoPuntos().addAll(actual.getCartasDelante());</span>
+<span class="fc" id="L69">        actual.getCartasDelante().clear();</span>
+<span class="fc" id="L70">        return partidaRepository.save(partida);</span>
+    }
+
+    /**
+     * Paso 2 — Sacar Carta del Mazo:
+     * Evalúa si aplica la Regla de Pérdida de Turno.
+     */
+    @Transactional
+    public Partida sacarCarta(Long id) {
+<span class="fc" id="L79">        Partida partida = obtenerPartida(id);</span>
+<span class="fc" id="L80">        validarPartidaEnProgreso(partida);</span>
+
+        // 1. Extraer carta del mazo de forma aleatoria
+<span class="fc" id="L83">        Carta cartaSacada = partida.getMazo().sacarCarta();</span>
+
+        // Si el mazo se vació, finaliza la partida
+<span class="fc bfc" id="L86" title="All 2 branches covered.">        if (cartaSacada == null) {</span>
+<span class="fc" id="L87">            finalizarPartida(partida);</span>
+<span class="fc" id="L88">            return partidaRepository.save(partida);</span>
+        }
+
+<span class="fc" id="L91">        Jugador actual = partida.getJugadorActual();</span>
+
+        // 2. Verificar si el valor de la nueva carta YA EXISTÍA en las cartas delante
+        // del jugador
+<span class="fc" id="L95">        boolean yaTeniaEseValor = actual.getCartasDelante().stream()</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">                .anyMatch(c -&gt; c.getValor() == cartaSacada.getValor());</span>
+
+        // 3. Contar cuántas cartas tenía delante ANTES de añadir la nueva
+<span class="fc" id="L99">        int cantidadCartasAntes = actual.getCartasDelante().size();</span>
+
+        // 4. Evaluar la Regla Oficial de Pérdida
+        // Condición: ¿Tenía 3 o más cartas en total Y la nueva carta repite un valor
+        // existente?
+<span class="fc bfc" id="L104" title="All 4 branches covered.">        if (cantidadCartasAntes &gt;= 3 &amp;&amp; yaTeniaEseValor) {</span>
+            // PERDIÓ EL TURNO
+<span class="fc" id="L106">            actual.getCartasDelante().clear(); // Se descartan todas las cartas de la mesa</span>
+<span class="fc" id="L107">            partida.siguienteTurno(); // Pasa al siguiente jugador</span>
+<span class="fc" id="L108">            return partidaRepository.save(partida);</span>
+        }
+
+        // 5. Si no perdió (tenía &lt; 3 cartas o el valor era nuevo), se agrega la carta
+        // normalmente
+<span class="fc" id="L113">        Carta nuevaCarta = new Carta(cartaSacada.getValor());</span>
+<span class="fc" id="L114">        actual.getCartasDelante().add(nuevaCarta);</span>
+<span class="fc" id="L115">        partida.setValorUltimaCarta(cartaSacada.getValor());</span>
+
+        // Si tras haber sacado la carta actual el mazo quedó con 0 cartas, finaliza el
+        // juego
+<span class="fc bfc" id="L119" title="All 2 branches covered.">        if (partida.getMazo().getCantidadRestante() == 0) {</span>
+<span class="fc" id="L120">            finalizarPartida(partida);</span>
+        }
+<span class="fc" id="L122">        return partidaRepository.save(partida);</span>
+    }
+
+    /**
+     * Paso 3 — Robar Cartas:
+     * Toma las cartas de igual valor recién sacado que tengan los oponentes.
+     */
+    @Transactional
+    public Partida robarCartas(Long idPartida) {
+<span class="fc" id="L131">        Partida partida = obtenerPartida(idPartida);</span>
+<span class="fc" id="L132">        validarPartidaEnProgreso(partida);</span>
+
+<span class="fc" id="L134">        Integer valorUltimo = partida.getValorUltimaCarta();</span>
+<span class="fc bfc" id="L135" title="All 2 branches covered.">        if (valorUltimo == null) {</span>
+<span class="fc" id="L136">            throw new IllegalStateException(&quot;Debes sacar una carta primero para poder robar.&quot;);</span>
+        }
+
+<span class="fc" id="L139">        Jugador actual = partida.getJugadorActual();</span>
+<span class="fc bfc" id="L140" title="All 2 branches covered.">        if (actual == null) {</span>
+<span class="fc" id="L141">            throw new IllegalStateException(&quot;No se pudo identificar al jugador actual.&quot;);</span>
+        }
+
+<span class="fc" id="L144">        boolean seRoboAlguna = false;</span>
+
+<span class="fc bfc" id="L146" title="All 2 branches covered.">        for (Jugador oponente : partida.getJugadores()) {</span>
+<span class="fc bfc" id="L147" title="All 2 branches covered.">            if (oponente.getId().equals(actual.getId())) continue;</span>
+
+<span class="fc" id="L149">            Iterator&lt;Carta&gt; it = oponente.getCartasDelante().iterator();</span>
+<span class="fc bfc" id="L150" title="All 2 branches covered.">            while (it.hasNext()) {</span>
+<span class="fc" id="L151">                Carta carta = it.next();</span>
+<span class="fc bfc" id="L152" title="All 2 branches covered.">                if (carta.getValor() == valorUltimo.intValue()) {</span>
+<span class="fc" id="L153">                    it.remove();</span>
+<span class="fc" id="L154">                    actual.getCartasDelante().add(carta);</span>
+<span class="fc" id="L155">                    seRoboAlguna = true;</span>
+                }
+<span class="fc" id="L157">            }</span>
+<span class="fc" id="L158">        }</span>
+
+<span class="fc bfc" id="L160" title="All 2 branches covered.">        if (!seRoboAlguna) {</span>
+<span class="fc" id="L161">            throw new IllegalStateException(&quot;No hay cartas de valor &quot; + valorUltimo + &quot; para robar a ningún oponente.&quot;);</span>
+        }
+<span class="fc" id="L163">        return partidaRepository.save(partida);</span>
+    }
+    /**
+     * Finaliza voluntariamente el turno y le da paso al siguiente jugador.
+     */
+    public Partida plantarse(Long idPartida) {
+<span class="fc" id="L169">        Partida partida = obtenerPartida(idPartida);</span>
+<span class="fc" id="L170">        validarPartidaEnProgreso(partida);</span>
+
+<span class="fc" id="L172">        partida.siguienteTurno();</span>
+<span class="fc" id="L173">        return partidaRepository.save(partida);</span>
+    }
+
+    /**
+     * Finalización automática de la partida al agotarse el mazo.
+     * Consolida puntos y define al ganador o desempate.
+     */
+    private void finalizarPartida(Partida partida) {
+<span class="fc" id="L181">        partida.setEstado(EstadoPartida.FINALIZADA);</span>
+
+        // Guardar automáticamente cualquier carta remanente en mesa
+<span class="fc bfc" id="L184" title="All 2 branches covered.">        for (Jugador j : partida.getJugadores()) {</span>
+<span class="fc" id="L185">            j.getPozoPuntos().addAll(j.getCartasDelante());</span>
+<span class="fc" id="L186">            j.getCartasDelante().clear();</span>
+<span class="fc" id="L187">        }</span>
+
+        // 2. Determinar el ganador aplicando la regla de desempate
+<span class="fc" id="L190">        Jugador ganador = resolverGanadorConDesempate(partida.getJugadores());</span>
+
+        // 3. Generar el resumen de jugadores con sus puntos Y SUS CARTAS
+<span class="fc" id="L193">        StringBuilder resumen = new StringBuilder();</span>
+<span class="fc bfc" id="L194" title="All 2 branches covered.">        for (int i = 0; i &lt; partida.getJugadores().size(); i++) {</span>
+<span class="fc" id="L195">            Jugador j = partida.getJugadores().get(i);</span>
+<span class="fc" id="L196">            int puntos = j.getPozoPuntos().stream().mapToInt(Carta::getValor).sum();</span>
+
+            // Extraer y ordenar la lista de valores de cartas (ej: [8, 5, 4, 2])
+<span class="fc" id="L199">            List&lt;Integer&gt; valoresCartas = j.getPozoPuntos().stream()</span>
+<span class="fc" id="L200">                    .map(Carta::getValor)</span>
+<span class="fc" id="L201">                    .sorted(Comparator.reverseOrder())</span>
+<span class="fc" id="L202">                    .toList();</span>
+
+<span class="fc" id="L204">            resumen.append(j.getNombre())</span>
+<span class="fc" id="L205">                    .append(&quot; (&quot;).append(puntos).append(&quot; pts - Cartas: &quot;).append(valoresCartas).append(&quot;)&quot;);</span>
+
+<span class="fc bfc" id="L207" title="All 2 branches covered.">            if (i &lt; partida.getJugadores().size() - 1) {</span>
+<span class="fc" id="L208">                resumen.append(&quot;, &quot;);</span>
+            }
+        }
+
+        // 4. Crear y guardar el registro del histórico
+<span class="fc" id="L213">        PartidaHistorico historico = new PartidaHistorico();</span>
+<span class="fc" id="L214">        historico.setPartidaId(String.valueOf(partida.getId()));</span>
+<span class="fc" id="L215">        historico.setFechaFin(LocalDateTime.now());</span>
+<span class="fc bfc" id="L216" title="All 2 branches covered.">        historico.setGanadorNombre(ganador != null ? ganador.getNombre() : &quot;Empate Total&quot;);</span>
+<span class="fc bfc" id="L217" title="All 2 branches covered.">        historico.setGanadorPuntaje(ganador != null ? calcularPuntos(ganador) : 0);</span>
+<span class="fc" id="L218">        historico.setResumenJugadores(resumen.toString());</span>
+
+<span class="fc" id="L220">        partidaHistoricoRepository.save(historico);</span>
+<span class="fc" id="L221">    }</span>
+
+    public Partida obtenerPartida(Long idPartida) {
+<span class="fc" id="L224">        return partidaRepository.findById(idPartida)</span>
+<span class="fc" id="L225">                .orElseThrow(() -&gt; new IllegalArgumentException(&quot;La partida con ID &quot; + idPartida + &quot; no existe.&quot;));</span>
+    }
+
+    private void validarPartidaEnProgreso(Partida partida) {
+<span class="fc bfc" id="L229" title="All 2 branches covered.">        if (partida.getEstado() != EstadoPartida.EN_PROGRESO) {</span>
+<span class="fc" id="L230">            throw new IllegalStateException(&quot;La partida no está en curso.&quot;);</span>
+        }
+<span class="fc" id="L232">    }</span>
+
+    private String validarNombre(String nombre) {
+<span class="fc bfc" id="L235" title="All 2 branches covered.">        if (nombre == null) {</span>
+<span class="fc" id="L236">            throw new IllegalArgumentException(&quot;El nombre del jugador no puede ser nulo.&quot;);</span>
+        }
+<span class="fc" id="L238">        String limpio = nombre.trim();</span>
+<span class="fc bfc" id="L239" title="All 2 branches covered.">        if (limpio.length() &lt; NOMBRE_MIN) {</span>
+<span class="fc" id="L240">            throw new IllegalArgumentException(</span>
+                    &quot;El nombre '&quot; + limpio + &quot;' tiene menos de 3 caracteres.&quot;);
+        }
+<span class="fc bfc" id="L243" title="All 2 branches covered.">        if (limpio.length() &gt; NOMBRE_MAX) {</span>
+<span class="fc" id="L244">            throw new IllegalArgumentException(</span>
+                    &quot;El nombre '&quot; + limpio + &quot;' tiene más de 15 caracteres.&quot;);
+        }
+<span class="fc bfc" id="L247" title="All 2 branches covered.">        if (NombreProhibido.contiene(limpio)) {</span>
+<span class="fc" id="L248">            throw new IllegalArgumentException(</span>
+                    &quot;El nombre '&quot; + limpio + &quot;' no está permitido.&quot;);
+        }
+<span class="fc" id="L251">        return limpio;</span>
+    }
+
+    public List&lt;PartidaHistorico&gt; obtenerHistorial() {
+<span class="fc" id="L255">        return partidaHistoricoRepository.findAll();</span>
+    }
+
+    /**
+     * Mecanismo de Desempate (Segun Especificacion Oficial):
+     * 1. Compara por puntaje total acumulado.
+     * 2. Si hay empate, compara secuencialmente la cantidad de cartas de valor 1, 2, 3... hasta 10.
+     */
+    private Jugador resolverGanadorConDesempate(List&lt;Jugador&gt; jugadores) {
+<span class="fc bfc" id="L264" title="All 2 branches covered.">        if (jugadores.isEmpty()) {</span>
+<span class="fc" id="L265">            return null;</span>
+        }
+
+<span class="fc" id="L268">        return jugadores.stream().max((j1, j2) -&gt; {</span>
+<span class="fc" id="L269">            int puntos1 = calcularPuntos(j1);</span>
+<span class="fc" id="L270">            int puntos2 = calcularPuntos(j2);</span>
+
+            // Criterio 1: Mayor puntaje acumulado
+<span class="fc bfc" id="L273" title="All 2 branches covered.">            if (puntos1 != puntos2) {</span>
+<span class="fc" id="L274">                return Integer.compare(puntos1, puntos2);</span>
+            }
+
+            // Criterio 2: Desempate por cantidad de cartas de valor 1 al 10
+<span class="fc bfc" id="L278" title="All 2 branches covered.">            for (int valor = 1; valor &lt;= 10; valor++) {</span>
+<span class="fc" id="L279">                final int val = valor;</span>
+<span class="fc bfc" id="L280" title="All 2 branches covered.">                long cant1 = j1.getPozoPuntos().stream().filter(c -&gt; c.getValor() == val).count();</span>
+<span class="fc bfc" id="L281" title="All 2 branches covered.">                long cant2 = j2.getPozoPuntos().stream().filter(c -&gt; c.getValor() == val).count();</span>
+
+<span class="fc bfc" id="L283" title="All 2 branches covered.">                if (cant1 != cant2) {</span>
+<span class="fc" id="L284">                    return Long.compare(cant1, cant2);</span>
+                }
+            }
+
+<span class="fc" id="L288">            return 0; // Empate total en cantidad de cartas en todos los valores</span>
+<span class="fc" id="L289">        }).orElse(null);</span>
+    }
+
+    private int calcularPuntos(Jugador jugador) {
+<span class="fc" id="L293">        return jugador.getPozoPuntos().stream().mapToInt(Carta::getValor).sum();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
