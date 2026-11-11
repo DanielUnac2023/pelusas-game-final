@@ -4,16 +4,17 @@ Aplicación web interactiva para jugar una versión digital del juego de mesa **
 
 ---
 
-## 👥 Integrantes
+## Integrantes
 
-- **Daniel** (DanielUnac2023) - _Desarrollador_ - desarrollador3@unioncolombianadelsur.org
-- **Integrante 2** - _Rol / Correo_ (completar)
+- **Daniel Gonzalez**
+- **Duvan Duarte**
+- **Gabriel Arteaga**
 
 > Completar con los nombres, roles y correos reales de todos los integrantes del equipo.
 
 ---
 
-## 🛠️ Tecnologías
+## Tecnologías
 
 - **Backend:** Java 21, Spring Boot 4.1, Spring Data JPA (Hibernate), API REST, Lombok.
 - **Frontend:** Vue 3, Vue Router, Vite, Tailwind CSS.
@@ -26,7 +27,7 @@ Aplicación web interactiva para jugar una versión digital del juego de mesa **
 
 ---
 
-## 🏗️ Arquitectura
+## Arquitectura
 
 Cliente-servidor con **cliente delgado**:
 
@@ -55,7 +56,7 @@ Definida en `backend/src/main/resources/application.properties`: H2 en memoria (
 
 ---
 
-## 📋 Requisitos
+## Requisitos
 
 - **JDK 21** o superior.
 - **Maven 3.8+** (o el wrapper incluido `mvnw`).
@@ -64,7 +65,7 @@ Definida en `backend/src/main/resources/application.properties`: H2 en memoria (
 
 ---
 
-## 🚀 Instalación
+## Instalación
 
 ```bash
 git clone https://github.com/DanielUnac2023/pelusas-game-final.git
@@ -79,13 +80,13 @@ cd ..
 
 El backend descarga sus dependencias automáticamente con Maven.
 
-## ⚙️ Configuración
+## Configuración
 
 - Backend: `backend/src/main/resources/application.properties` (puerto `8080`, base de datos y JPA).
 - Frontend: la URL del backend está en `frontend/src/services/api.js` (`http://localhost:8080/api/partidas`).
 - Playwright: `frontend/playwright.config.js` (usa `http://localhost:5173` y levanta Vite automáticamente).
 
-## ▶️ Ejecución
+## Ejecución
 
 ```bash
 # Terminal 1 - Backend (http://localhost:8080)
@@ -99,7 +100,7 @@ npm run dev
 
 ---
 
-## 🧪 Pruebas
+## Pruebas
 
 Todas las pruebas del backend viven en `backend/src/test/java/edu/unac/backend/`.
 
@@ -153,7 +154,7 @@ Archivos de prueba: `frontend/tests-e2e/pelusas.spec.js`.
 
 ---
 
-## 📊 Resultados (última ejecución)
+## Resultados (última ejecución)
 
 | Métrica | Resultado | Meta |
 |---|---|---|
@@ -162,7 +163,7 @@ Archivos de prueba: `frontend/tests-e2e/pelusas.spec.js`.
 | Cobertura de ramas | 100 % (96/96) | 100 % |
 | Mutation score (Pitest) | 98 % (159/163) | ≥ 90 % |
 
-## 📁 Entregables
+## Entregables
 
 | Entregable | Ubicación |
 |---|---|
