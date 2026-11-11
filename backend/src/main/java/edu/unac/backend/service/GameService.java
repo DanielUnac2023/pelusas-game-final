@@ -239,7 +239,7 @@ public class GameService {
      * 2. Si hay empate, compara secuencialmente la cantidad de cartas de valor 1, 2, 3... hasta 10.
      */
     private Jugador resolverGanadorConDesempate(List<Jugador> jugadores) {
-        if (jugadores == null || jugadores.isEmpty()) {
+        if (jugadores.isEmpty()) {
             return null;
         }
 

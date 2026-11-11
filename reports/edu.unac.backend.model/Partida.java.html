@@ -1,0 +1,1653 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+
+
+<h1>Partida.java</h1>
+
+<table class="src">
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_1'/>
+1
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_1'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>package edu.unac.backend.model;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_2'/>
+2
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_2'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_3'/>
+3
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_3'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import jakarta.persistence.*;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_4'/>
+4
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_4'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.util.ArrayList;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_5'/>
+5
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_5'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.util.List;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_6'/>
+6
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_6'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_7'/>
+7
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_7'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>@Entity</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_8'/>
+8
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_8'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>public class Partida {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_9'/>
+9
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_9'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_10'/>
+10
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_10'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    @Id</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_11'/>
+11
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_11'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    @GeneratedValue(strategy = GenerationType.IDENTITY)</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_12'/>
+12
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_12'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private Long id;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_13'/>
+13
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_13'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_14'/>
+14
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_14'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    @Enumerated(EnumType.STRING)</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_15'/>
+15
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_15'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private EstadoPartida estado = EstadoPartida.CREADA;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_16'/>
+16
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_16'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_17'/>
+17
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_17'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    private int indiceJugadorActual = 0;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_18'/>
+18
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_18'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_19'/>
+19
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_19'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_20'/>
+20
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_20'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private List&#60;Jugador&#62; jugadores = new ArrayList&#60;&#62;();</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_21'/>
+21
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_21'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_22'/>
+22
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_22'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    // &#9989; OBLIGATORIO: CascadeType.ALL para que JPA guarde los cambios internos del mazo</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_23'/>
+23
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_23'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_24'/>
+24
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_24'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private Mazo mazo = new Mazo();</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_25'/>
+25
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_25'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_26'/>
+26
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_26'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    public Partida() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_27'/>
+27
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_27'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        this.mazo = new Mazo();</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_28'/>
+28
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_28'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_29'/>
+29
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_29'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_30'/>
+30
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_30'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    public Partida(Long id) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_31'/>
+31
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_31'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        this.id = id;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_32'/>
+32
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_32'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        this.mazo = new Mazo();</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_33'/>
+33
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_33'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_34'/>
+34
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_34'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_35'/>
+35
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_35'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    // Valor de la &#250;ltima carta sacada en el turno actual; null si a&#250;n no sac&#243;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_36'/>
+36
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_36'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private Integer valorUltimaCarta;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_37'/>
+37
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_37'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_38'/>
+38
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_38'>1</a>
+<span>
+
+1. getValorUltimaCarta : replaced Integer return value with 0 for edu/unac/backend/model/Partida::getValorUltimaCarta &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>    public Integer getValorUltimaCarta() { return valorUltimaCarta; }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_39'/>
+39
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_39'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    public void setValorUltimaCarta(Integer valorUltimaCarta) { this.valorUltimaCarta = valorUltimaCarta; }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_40'/>
+40
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_40'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_41'/>
+41
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_41'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    // Avanza al siguiente turno c&#237;clicamente</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_42'/>
+42
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_42'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public void siguienteTurno() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_43'/>
+43
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_43'>1</a>
+<span>
+
+1. siguienteTurno : negated conditional &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        if (!jugadores.isEmpty()) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_44'/>
+44
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_44'>2</a>
+<span>
+
+1. siguienteTurno : Replaced integer modulus with multiplication &rarr; KILLED<br/>
+
+2. siguienteTurno : Replaced integer addition with subtraction &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            this.indiceJugadorActual = (this.indiceJugadorActual + 1) % jugadores.size();</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_45'/>
+45
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_45'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_46'/>
+46
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_46'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        this.valorUltimaCarta = null;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_47'/>
+47
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_47'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_48'/>
+48
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_48'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_49'/>
+49
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_49'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public Jugador getJugadorActual() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_50'/>
+50
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_50'>1</a>
+<span>
+
+1. getJugadorActual : negated conditional &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        if (jugadores.isEmpty()) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_51'/>
+51
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_51'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            return null;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_52'/>
+52
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_52'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_53'/>
+53
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_53'>1</a>
+<span>
+
+1. getJugadorActual : replaced return value with null for edu/unac/backend/model/Partida::getJugadorActual &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return jugadores.get(indiceJugadorActual);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_54'/>
+54
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_54'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_55'/>
+55
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_55'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_56'/>
+56
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_56'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    // Getters y Setters</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_57'/>
+57
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_57'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public Long getId() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_58'/>
+58
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_58'>1</a>
+<span>
+
+1. getId : replaced Long return value with 0L for edu/unac/backend/model/Partida::getId &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return id;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_59'/>
+59
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_59'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_60'/>
+60
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_60'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_61'/>
+61
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_61'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public void setId(Long id) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_62'/>
+62
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_62'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        this.id = id;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_63'/>
+63
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_63'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_64'/>
+64
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_64'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_65'/>
+65
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_65'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public EstadoPartida getEstado() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_66'/>
+66
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_66'>1</a>
+<span>
+
+1. getEstado : replaced return value with null for edu/unac/backend/model/Partida::getEstado &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return estado;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_67'/>
+67
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_67'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_68'/>
+68
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_68'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_69'/>
+69
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_69'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public void setEstado(EstadoPartida estado) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_70'/>
+70
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_70'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        this.estado = estado;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_71'/>
+71
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_71'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_72'/>
+72
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_72'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_73'/>
+73
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_73'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public int getIndiceJugadorActual() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_74'/>
+74
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_74'>1</a>
+<span>
+
+1. getIndiceJugadorActual : replaced int return with 0 for edu/unac/backend/model/Partida::getIndiceJugadorActual &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return indiceJugadorActual;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_75'/>
+75
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_75'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_76'/>
+76
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_76'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_77'/>
+77
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_77'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public void setIndiceJugadorActual(int indiceJugadorActual) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_78'/>
+78
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_78'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        this.indiceJugadorActual = indiceJugadorActual;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_79'/>
+79
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_79'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_80'/>
+80
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_80'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_81'/>
+81
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_81'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public List&#60;Jugador&#62; getJugadores() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_82'/>
+82
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_82'>1</a>
+<span>
+
+1. getJugadores : replaced return value with Collections.emptyList for edu/unac/backend/model/Partida::getJugadores &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return jugadores;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_83'/>
+83
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_83'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_84'/>
+84
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_84'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_85'/>
+85
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_85'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public void setJugadores(List&#60;Jugador&#62; jugadores) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_86'/>
+86
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_86'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        this.jugadores = jugadores;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_87'/>
+87
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_87'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_88'/>
+88
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_88'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_89'/>
+89
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_89'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public Mazo getMazo() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_90'/>
+90
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_90'>1</a>
+<span>
+
+1. getMazo : replaced return value with null for edu/unac/backend/model/Partida::getMazo &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return mazo;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_91'/>
+91
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_91'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_92'/>
+92
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_92'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_93'/>
+93
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_93'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public void setMazo(Mazo mazo) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_94'/>
+94
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_94'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        this.mazo = mazo;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_95'/>
+95
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_95'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@21f91efa_96'/>
+96
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_96'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>}</span></pre></td></tr>
+
+
+
+<tr><td></td><td></td><td><h2>Mutations</h2></td></tr>
+
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@21f91efa_38'>38</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_38'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getValorUltimaCarta<br/><b>Killed by : </b>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testGuardarPelusasConMesaVacia()]</span></span> replaced Integer return value with 0 for edu/unac/backend/model/Partida::getValorUltimaCarta &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@21f91efa_43'>43</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_43'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>siguienteTurno<br/><b>Killed by : </b>edu.unac.backend.model.PartidaTest.[engine:junit-jupiter]/[class:edu.unac.backend.model.PartidaTest]/[method:testSiguienteTurno()]</span></span> negated conditional &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@21f91efa_44'>44</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_44'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>siguienteTurno<br/><b>Killed by : </b>edu.unac.backend.model.PartidaTest.[engine:junit-jupiter]/[class:edu.unac.backend.model.PartidaTest]/[method:testSiguienteTurno()]</span></span> Replaced integer modulus with multiplication &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>siguienteTurno<br/><b>Killed by : </b>edu.unac.backend.model.PartidaTest.[engine:junit-jupiter]/[class:edu.unac.backend.model.PartidaTest]/[method:testSiguienteTurno()]</span></span> Replaced integer addition with subtraction &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@21f91efa_50'>50</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_50'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getJugadorActual<br/><b>Killed by : </b>edu.unac.backend.model.PartidaTest.[engine:junit-jupiter]/[class:edu.unac.backend.model.PartidaTest]/[method:testInicializacionPartida()]</span></span> negated conditional &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@21f91efa_53'>53</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_53'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getJugadorActual<br/><b>Killed by : </b>edu.unac.backend.model.PartidaTest.[engine:junit-jupiter]/[class:edu.unac.backend.model.PartidaTest]/[method:testSiguienteTurno()]</span></span> replaced return value with null for edu/unac/backend/model/Partida::getJugadorActual &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@21f91efa_58'>58</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_58'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getId<br/><b>Killed by : </b>edu.unac.backend.model.PartidaTest.[engine:junit-jupiter]/[class:edu.unac.backend.model.PartidaTest]/[method:testConstructoresYSetters()]</span></span> replaced Long return value with 0L for edu/unac/backend/model/Partida::getId &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@21f91efa_66'>66</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_66'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getEstado<br/><b>Killed by : </b>edu.unac.backend.model.PartidaTest.[engine:junit-jupiter]/[class:edu.unac.backend.model.PartidaTest]/[method:testInicializacionPartida()]</span></span> replaced return value with null for edu/unac/backend/model/Partida::getEstado &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@21f91efa_74'>74</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_74'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getIndiceJugadorActual<br/><b>Killed by : </b>edu.unac.backend.model.PartidaTest.[engine:junit-jupiter]/[class:edu.unac.backend.model.PartidaTest]/[method:testConstructoresYSetters()]</span></span> replaced int return with 0 for edu/unac/backend/model/Partida::getIndiceJugadorActual &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@21f91efa_82'>82</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_82'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getJugadores<br/><b>Killed by : </b>edu.unac.backend.model.PartidaTest.[engine:junit-jupiter]/[class:edu.unac.backend.model.PartidaTest]/[method:testSiguienteTurno()]</span></span> replaced return value with Collections.emptyList for edu/unac/backend/model/Partida::getJugadores &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@21f91efa_90'>90</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@21f91efa_90'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getMazo<br/><b>Killed by : </b>edu.unac.backend.model.PartidaTest.[engine:junit-jupiter]/[class:edu.unac.backend.model.PartidaTest]/[method:testInicializacionPartida()]</span></span> replaced return value with null for edu/unac/backend/model/Partida::getMazo &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+</table>
+
+
+<h2>Active mutators</h2>
+<ul>
+
+<li class='mutator'>CONDITIONALS_BOUNDARY</li>
+
+<li class='mutator'>EMPTY_RETURNS</li>
+
+<li class='mutator'>FALSE_RETURNS</li>
+
+<li class='mutator'>INCREMENTS</li>
+
+<li class='mutator'>INVERT_NEGS</li>
+
+<li class='mutator'>MATH</li>
+
+<li class='mutator'>NEGATE_CONDITIONALS</li>
+
+<li class='mutator'>NULL_RETURNS</li>
+
+<li class='mutator'>PRIMITIVE_RETURNS</li>
+
+<li class='mutator'>TRUE_RETURNS</li>
+
+<li class='mutator'>VOID_METHOD_CALLS</li>
+
+</ul>
+
+<h2>Tests examined</h2>
+<ul>
+<li>edu.unac.backend.model.PartidaTest.[engine:junit-jupiter]/[class:edu.unac.backend.model.PartidaTest]/[method:testInicializacionPartida()] (1 ms)</li><li>edu.unac.backend.model.PartidaTest.[engine:junit-jupiter]/[class:edu.unac.backend.model.PartidaTest]/[method:testConstructoresYSetters()] (1 ms)</li><li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testPlantarse()] (3 ms)</li><li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testGuardarPelusasConMesaVacia()] (7 ms)</li><li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testStreamAnyMatchConCartasDiferentes()] (3 ms)</li><li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testPartidaNoEnProgreso()] (9 ms)</li><li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testSacarCartaMenosDeTresCartasValorRepetido()] (6 ms)</li><li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testCrearPartidaExitosamente()] (8 ms)</li><li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testSacarCartaPerdidaDeTurno()] (7 ms)</li><li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testSacarCartaRepetidaConMenosDe3CartasSinPerdidaTurno()] (7 ms)</li><li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testGuardarPelusas()] (9 ms)</li><li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testSacarCartaSinPerdidaTurno()] (10 ms)</li><li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testRobarCartas()] (8 ms)</li><li>edu.unac.backend.service.GameServiceValidacionTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceValidacionTest]/[method:sacarConMazoVacioYSinJugadoresFinalizaSinGanador()] (11 ms)</li><li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testSacarCartaMasDeTresCartasValorNoRepetido()] (9 ms)</li><li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testRobarCartasDeVariosOponentes()] (9 ms)</li><li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testFinalizarPartidaGanadorNull()] (11 ms)</li><li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testSacarCartaMazoVacioFinalizaPartida()] (8 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:plantarseSobrePartidaCreadaConCartasLanzaError()] (22 ms)</li><li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testSacarUltimaCartaDelMazo()] (12 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:plantarseSobrePartidaFinalizadaConCartasLanzaError()] (25 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:robar_sinJugadorActualDevuelve400()] (23 ms)</li><li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testDesempatePorCantidadDeCartas()] (19 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[test-template:guardarYRobarSobrePartidaFinalizadaDevuelven400(java.lang.String)]/[test-template-invocation:#1] (25 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:guardar_despuesDeSacarUnaCartaDevuelve400()] (24 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:robar_noTocaLasCartasDelPropioJugador()] (27 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:obtenerPartida_sinMazoDevuelveCeroCartas()] (32 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:sacar_sinJugadoresYMazoVacioTerminaEnEmpateTotal()] (35 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:robar_sinCoincidenciasDevuelve400YNoCambiaNada()] (34 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:desempate_empateTotalEligeUnoDeLosJugadores()] (31 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:sacar_agregaLaCartaAlJugadorActual()] (39 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:obtenerPartida_sinJugadoresNoTieneJugadorActual()] (49 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:plantarse_desdeElUltimoDeTresVuelveAlPrimero()] (44 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:sacar_conSoloDosCartasYValorRepetidoNoPierdeTurno()] (42 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:guardar_muevePelusasAlPozo()] (41 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[test-template:guardarYRobarSobrePartidaFinalizadaDevuelven400(java.lang.String)]/[test-template-invocation:#2] (46 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:sacar_conMazoVacioFinalizaYConsolidaCartasDeLaMesa()] (36 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:guardar_sinCartasDelanteDevuelve400()] (48 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:sacar_conTresCartasYValorNuevoNoPierdeTurno()] (47 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:robar_tomaCartasDelValorUltimoDeLosOponentes()] (44 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:desempate_decididoEnElValorUno()] (42 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:obtenerPartida_mapeaTodosLosCampos()] (51 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:plantarse_avanzaTurnoYDaLaVuelta()] (52 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:desempate_ordenInversoDeJugadores()] (43 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:sacar_ultimaCartaFinalizaYRegistraHistorico()] (47 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:sacarYLuegoRobar_usaElValorDeLaCartaSacada()] (59 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:robar_sinSacarCartaPrimeroDevuelve400()] (69 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:sacar_pierdeTurnoConTresCartasYValorRepetido()] (73 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:crearPartida_devuelveEstadoInicialCompleto()] (74 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:plantarse_sinCartasDelanteDevuelve400()] (91 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:desempate_gananteMasCartasDeValorBajo()] (93 ms)</li><li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testRobarCartasSinJugadorActual()] (146 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:sacar_perderTurnoConLaUltimaCartaFinalizaEnLaSiguienteLlamada()] (124 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:sacarSobrePartidaFinalizadaLanzaError()] (160 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[test-template:crearPartida_aceptaLimitesDeJugadores(java.lang.String)]/[test-template-invocation:#2] (188 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[test-template:crearPartida_aceptaLimitesDeJugadores(java.lang.String)]/[test-template-invocation:#1] (207 ms)</li><li>edu.unac.backend.model.PartidaTest.[engine:junit-jupiter]/[class:edu.unac.backend.model.PartidaTest]/[method:testSiguienteTurno()] (2 ms)</li><li>edu.unac.backend.model.PartidaTest.[engine:junit-jupiter]/[class:edu.unac.backend.model.PartidaTest]/[method:testSiguienteTurnoSinJugadores()] (5 ms)</li><li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testObtenerPartidaExitoso()] (6 ms)</li><li>edu.unac.backend.service.GameServiceValidacionTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceValidacionTest]/[method:aceptaNombresEnLosLimites()] (6 ms)</li>
+</ul>
+
+<br/>
+
+Report generated by <a href='https://pitest.org'>PIT</a> 1.30.0 <a href='https://github.com/sponsors/hcoles'>support</a>
+
+</body>
+</html>

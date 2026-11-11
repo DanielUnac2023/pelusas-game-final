@@ -1,0 +1,13 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+backend,edu.unac.backend.controller,GameController,0,236,0,8,0,53,0,15,0,11
+backend,edu.unac.backend.model,Jugador,0,83,0,0,0,26,0,12,0,12
+backend,edu.unac.backend.model,NombreProhibido,0,88,0,6,0,17,0,6,0,3
+backend,edu.unac.backend.model,EstadoPartida,0,21,0,0,0,4,0,1,0,1
+backend,edu.unac.backend.model,PartidaHistorico,0,63,0,0,0,20,0,14,0,14
+backend,edu.unac.backend.model,Mazo,0,80,0,10,0,19,0,11,0,6
+backend,edu.unac.backend.model,Carta,0,32,0,0,0,15,0,7,0,7
+backend,edu.unac.backend.model,Partida,0,124,0,4,0,35,0,18,0,16
+backend,edu.unac.backend.dto,JugadorDTO,0,46,0,0,0,15,0,10,0,10
+backend,edu.unac.backend.dto,GameStatusDTO,0,59,0,0,0,17,0,17,0,17
+backend,edu.unac.backend,BackendApplication,0,8,0,0,0,3,0,2,0,2
+backend,edu.unac.backend.service,GameService,0,587,0,68,0,129,0,52,0,18

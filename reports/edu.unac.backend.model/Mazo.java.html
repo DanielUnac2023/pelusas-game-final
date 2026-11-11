@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+
+
+<h1>Mazo.java</h1>
+
+<table class="src">
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@e72fb04_1'/>
+1
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_1'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>package edu.unac.backend.model;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@e72fb04_2'/>
+2
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_2'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@e72fb04_3'/>
+3
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_3'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import jakarta.persistence.*;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@e72fb04_4'/>
+4
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_4'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@e72fb04_5'/>
+5
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_5'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.util.ArrayList;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@e72fb04_6'/>
+6
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_6'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.util.Collections;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@e72fb04_7'/>
+7
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_7'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.util.List;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@e72fb04_8'/>
+8
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_8'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@e72fb04_9'/>
+9
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_9'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>@Entity</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@e72fb04_10'/>
+10
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_10'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>public class Mazo {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@e72fb04_11'/>
+11
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_11'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@e72fb04_12'/>
+12
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_12'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    @Id</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@e72fb04_13'/>
+13
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_13'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    @GeneratedValue(strategy = GenerationType.IDENTITY)</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@e72fb04_14'/>
+14
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_14'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private Long id; // &#55357;&#56392; Clave primaria exigida por JPA para las Entidades</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@e72fb04_15'/>
+15
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_15'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@e72fb04_16'/>
+16
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_16'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@e72fb04_17'/>
+17
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_17'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private final List&#60;Carta&#62; cartas = new ArrayList&#60;&#62;();</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@e72fb04_18'/>
+18
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_18'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@e72fb04_19'/>
+19
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_19'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    public Mazo() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@e72fb04_20'/>
+20
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_20'>1</a>
+<span>
+
+1. &#60;init&#62; : removed call to edu/unac/backend/model/Mazo::inicializarMazo &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        inicializarMazo();</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@e72fb04_21'/>
+21
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_21'>1</a>
+<span>
+
+1. &#60;init&#62; : removed call to edu/unac/backend/model/Mazo::mezclar &rarr; SURVIVED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>        mezclar();</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@e72fb04_22'/>
+22
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_22'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@e72fb04_23'/>
+23
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_23'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@e72fb04_24'/>
+24
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_24'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private void inicializarMazo() {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@e72fb04_25'/>
+25
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_25'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@e72fb04_26'/>
+26
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_26'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        // Valores 1 a 5: 13 cartas cada uno (65 cartas en total)</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@e72fb04_27'/>
+27
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_27'>2</a>
+<span>
+
+1. inicializarMazo : negated conditional &rarr; KILLED<br/>
+
+2. inicializarMazo : changed conditional boundary &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        for (int valor = 1; valor &#60;= 5; valor++) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@e72fb04_28'/>
+28
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_28'>2</a>
+<span>
+
+1. inicializarMazo : changed conditional boundary &rarr; KILLED<br/>
+
+2. inicializarMazo : negated conditional &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            for (int i = 0; i &#60; 13; i++) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@e72fb04_29'/>
+29
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_29'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                cartas.add(new Carta(valor));</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@e72fb04_30'/>
+30
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_30'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>            }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@e72fb04_31'/>
+31
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_31'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@e72fb04_32'/>
+32
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_32'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@e72fb04_33'/>
+33
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_33'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        // Valores 6 a 10: 9 cartas cada uno (45 cartas en total)</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@e72fb04_34'/>
+34
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_34'>2</a>
+<span>
+
+1. inicializarMazo : changed conditional boundary &rarr; KILLED<br/>
+
+2. inicializarMazo : negated conditional &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        for (int valor = 6; valor &#60;= 10; valor++) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@e72fb04_35'/>
+35
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_35'>2</a>
+<span>
+
+1. inicializarMazo : changed conditional boundary &rarr; KILLED<br/>
+
+2. inicializarMazo : negated conditional &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            for (int i = 0; i &#60; 9; i++) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@e72fb04_36'/>
+36
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_36'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                cartas.add(new Carta(valor));</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@e72fb04_37'/>
+37
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_37'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>            }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@e72fb04_38'/>
+38
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_38'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@e72fb04_39'/>
+39
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_39'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@e72fb04_40'/>
+40
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_40'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@e72fb04_41'/>
+41
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_41'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public void mezclar() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@e72fb04_42'/>
+42
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_42'>1</a>
+<span>
+
+1. mezclar : removed call to java/util/Collections::shuffle &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        Collections.shuffle(cartas);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@e72fb04_43'/>
+43
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_43'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@e72fb04_44'/>
+44
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_44'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@e72fb04_45'/>
+45
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_45'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public List&#60;Carta&#62; getCartas() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@e72fb04_46'/>
+46
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_46'>1</a>
+<span>
+
+1. getCartas : replaced return value with Collections.emptyList for edu/unac/backend/model/Mazo::getCartas &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return cartas;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@e72fb04_47'/>
+47
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_47'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@e72fb04_48'/>
+48
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_48'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@e72fb04_49'/>
+49
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_49'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public int getCantidadRestante() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@e72fb04_50'/>
+50
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_50'>1</a>
+<span>
+
+1. getCantidadRestante : replaced int return with 0 for edu/unac/backend/model/Mazo::getCantidadRestante &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return this.cartas.size();</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@e72fb04_51'/>
+51
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_51'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@e72fb04_52'/>
+52
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_52'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@e72fb04_53'/>
+53
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_53'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public Carta sacarCarta() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@e72fb04_54'/>
+54
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_54'>1</a>
+<span>
+
+1. sacarCarta : negated conditional &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        if (this.cartas.isEmpty()) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@e72fb04_55'/>
+55
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_55'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            return null;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@e72fb04_56'/>
+56
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_56'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@e72fb04_57'/>
+57
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_57'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        // IMPORTANTE: .remove(0) reduce la lista del mazo de 110 a 109, luego a 108, etc.</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@e72fb04_58'/>
+58
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_58'>1</a>
+<span>
+
+1. sacarCarta : replaced return value with null for edu/unac/backend/model/Mazo::sacarCarta &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return this.cartas.remove(0);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@e72fb04_59'/>
+59
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_59'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@e72fb04_60'/>
+60
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_60'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>}</span></pre></td></tr>
+
+
+
+<tr><td></td><td></td><td><h2>Mutations</h2></td></tr>
+
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@e72fb04_20'>20</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_20'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>&#60;init&#62;<br/><b>Killed by : </b>edu.unac.backend.model.MazoTest.[engine:junit-jupiter]/[class:edu.unac.backend.model.MazoTest]/[method:testCantidadTotalCartas()]</span></span> removed call to edu/unac/backend/model/Mazo::inicializarMazo &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@e72fb04_21'>21</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_21'/> 
+
+<p class='SURVIVED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>&#60;init&#62;<br/><b>Killed by : </b>none</span></span> removed call to edu/unac/backend/model/Mazo::mezclar &rarr; SURVIVED</span>
+<a title="Click to view covering tests" class="view-covered-by-tests" onClick="document.getElementById('MutationIdentifier-[location=Location-[clazz=edu.unac.backend.model.Mazo,-method=<init>,-methodDesc=()V],-indexes=[19],-mutator=org.pitest.mutationtest.engine.gregor.mutators.VoidMethodCallMutator]').style.display=(document.getElementById('MutationIdentifier-[location=Location-[clazz=edu.unac.backend.model.Mazo,-method=<init>,-methodDesc=()V],-indexes=[19],-mutator=org.pitest.mutationtest.engine.gregor.mutators.VoidMethodCallMutator]').style.display == 'block')?'none':'block';">Covering tests</a>
+<div class="covered-tests" id="MutationIdentifier-[location=Location-[clazz=edu.unac.backend.model.Mazo,-method=<init>,-methodDesc=()V],-indexes=[19],-mutator=org.pitest.mutationtest.engine.gregor.mutators.VoidMethodCallMutator]" style="display:none;">Covered by tests:
+<ul>
+<li>edu.unac.backend.model.MazoTest.[engine:junit-jupiter]/[class:edu.unac.backend.model.MazoTest]/[method:testCantidadTotalCartas()]</li> <li>edu.unac.backend.model.MazoTest.[engine:junit-jupiter]/[class:edu.unac.backend.model.MazoTest]/[method:testSacarCartaMazoVacio()]</li> <li>edu.unac.backend.model.MazoTest.[engine:junit-jupiter]/[class:edu.unac.backend.model.MazoTest]/[method:testSacarCarta()]</li> <li>edu.unac.backend.model.MazoTest.[engine:junit-jupiter]/[class:edu.unac.backend.model.MazoTest]/[method:testDistribucionCartas()]</li> <li>edu.unac.backend.model.MazoTest.[engine:junit-jupiter]/[class:edu.unac.backend.model.MazoTest]/[method:testMezclarCambiaOrden()]</li> <li>edu.unac.backend.model.PartidaTest.[engine:junit-jupiter]/[class:edu.unac.backend.model.PartidaTest]/[method:testInicializacionPartida()]</li> <li>edu.unac.backend.model.PartidaTest.[engine:junit-jupiter]/[class:edu.unac.backend.model.PartidaTest]/[method:testSiguienteTurno()]</li> <li>edu.unac.backend.model.PartidaTest.[engine:junit-jupiter]/[class:edu.unac.backend.model.PartidaTest]/[method:testConstructoresYSetters()]</li> <li>edu.unac.backend.model.PartidaTest.[engine:junit-jupiter]/[class:edu.unac.backend.model.PartidaTest]/[method:testSiguienteTurnoSinJugadores()]</li> <li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testPlantarse()]</li> <li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testObtenerPartidaExitoso()]</li> <li>edu.unac.backend.service.GameServiceValidacionTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceValidacionTest]/[method:rechazaNombreNulo()]</li> <li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testObtenerHistorial()]</li> <li>edu.unac.backend.service.GameServiceValidacionTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceValidacionTest]/[method:rechazaNombreMuyLargo()]</li> <li>edu.unac.backend.service.GameServiceValidacionTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceValidacionTest]/[method:aceptaNombresEnLosLimites()]</li> <li>edu.unac.backend.service.GameServiceValidacionTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceValidacionTest]/[method:rechazaNombreMuyCorto()]</li> <li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testCrearPartidaCantidadInvalida()]</li> <li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testGuardarPelusasConMesaVacia()]</li> <li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testStreamAnyMatchConCartasDiferentes()]</li> <li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testPartidaNoEnProgreso()]</li> <li>edu.unac.backend.service.GameServiceValidacionTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceValidacionTest]/[method:rechazaNombreProhibidoSinImportarMayusculas()]</li> <li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testSacarCartaMenosDeTresCartasValorRepetido()]</li> <li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testObtenerPartidaNoExiste()]</li> <li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testCrearPartidaExitosamente()]</li> <li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testSacarCartaPerdidaDeTurno()]</li> <li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testSacarCartaRepetidaConMenosDe3CartasSinPerdidaTurno()]</li> <li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testGuardarPelusas()]</li> <li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testSacarCartaSinPerdidaTurno()]</li> <li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testRobarCartas()]</li> <li>edu.unac.backend.service.GameServiceValidacionTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceValidacionTest]/[method:sacarConMazoVacioYSinJugadoresFinalizaSinGanador()]</li> <li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testSacarCartaMasDeTresCartasValorNoRepetido()]</li> <li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:obtenerPartida_idNoNumericoDevuelve400()]</li> <li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testRobarCartasDeVariosOponentes()]</li> <li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testFinalizarPartidaGanadorNull()]</li> <li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testSacarCartaMazoVacioFinalizaPartida()]</li> <li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:historico_vacioDevuelveListaVacia()]</li> <li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:crearPartida_sinCuerpoDevuelve400()]</li> <li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:plantarseSobrePartidaCreadaConCartasLanzaError()]</li> <li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testSacarUltimaCartaDelMazo()]</li> <li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[test-template:accionesSobrePartidaInexistenteFallan(java.lang.String)]/[test-template-invocation:#1]</li> <li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:plantarseSobrePartidaFinalizadaConCartasLanzaError()]</li> <li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:robar_sinJugadorActualDevuelve400()]</li> <li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testDesempatePorCantidadDeCartas()]</li> <li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[test-template:guardarYRobarSobrePartidaFinalizadaDevuelven400(java.lang.String)]/[test-template-invocation:#1]</li> <li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:guardar_despuesDeSacarUnaCartaDevuelve400()]</li> <li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:robar_noTocaLasCartasDelPropioJugador()]</li> <li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:obtenerPartida_sinMazoDevuelveCeroCartas()]</li> <li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:obtenerPartida_inexistenteLanzaError()]</li> <li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:sacar_sinJugadoresYMazoVacioTerminaEnEmpateTotal()]</li> <li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:robar_sinCoincidenciasDevuelve400YNoCambiaNada()]</li> <li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:desempate_empateTotalEligeUnoDeLosJugadores()]</li> <li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:sacar_agregaLaCartaAlJugadorActual()]</li> <li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:obtenerPartida_sinJugadoresNoTieneJugadorActual()]</li> <li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:plantarse_desdeElUltimoDeTresVuelveAlPrimero()]</li> <li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:sacar_conSoloDosCartasYValorRepetidoNoPierdeTurno()]</li> <li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:guardar_muevePelusasAlPozo()]</li> <li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[test-template:guardarYRobarSobrePartidaFinalizadaDevuelven400(java.lang.String)]/[test-template-invocation:#2]</li> <li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:sacar_conMazoVacioFinalizaYConsolidaCartasDeLaMesa()]</li> <li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:guardar_sinCartasDelanteDevuelve400()]</li> <li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:sacar_conTresCartasYValorNuevoNoPierdeTurno()]</li> <li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:robar_tomaCartasDelValorUltimoDeLosOponentes()]</li> <li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:desempate_decididoEnElValorUno()]</li> <li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:obtenerPartida_mapeaTodosLosCampos()]</li> <li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:plantarse_avanzaTurnoYDaLaVuelta()]</li> <li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:desempate_ordenInversoDeJugadores()]</li> <li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:sacar_ultimaCartaFinalizaYRegistraHistorico()]</li> <li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:sacarYLuegoRobar_usaElValorDeLaCartaSacada()]</li> <li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:robar_sinSacarCartaPrimeroDevuelve400()]</li> <li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:sacar_pierdeTurnoConTresCartasYValorRepetido()]</li> <li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:crearPartida_devuelveEstadoInicialCompleto()]</li> <li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:plantarse_sinCartasDelanteDevuelve400()]</li> <li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:desempate_gananteMasCartasDeValorBajo()]</li> <li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testRobarCartasSinJugadorActual()]</li> <li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:sacar_perderTurnoConLaUltimaCartaFinalizaEnLaSiguienteLlamada()]</li> <li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:sacarSobrePartidaFinalizadaLanzaError()]</li> <li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[test-template:crearPartida_aceptaLimitesDeJugadores(java.lang.String)]/[test-template-invocation:#2]</li> <li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[test-template:crearPartida_aceptaLimitesDeJugadores(java.lang.String)]/[test-template-invocation:#1]</li> <li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testCrearPartidaConListaNull()]</li> <li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[test-template:crearPartida_rechazaCantidadInvalida(java.lang.String)]/[test-template-invocation:#1]</li> <li>edu.unac.backend.BackendApplicationTests.[engine:junit-jupiter]/[class:edu.unac.backend.BackendApplicationTests]/[method:contextLoads()]</li> <li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:historico_devuelveRegistrosGuardados()]</li> <li>edu.unac.backend.model.ModelosSimplesTest.[engine:junit-jupiter]/[class:edu.unac.backend.model.ModelosSimplesTest]/[method:mainArrancaLaAplicacion()]</li> 
+</ul>
+</div></div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@e72fb04_27'>27</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_27'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>inicializarMazo<br/><b>Killed by : </b>edu.unac.backend.model.MazoTest.[engine:junit-jupiter]/[class:edu.unac.backend.model.MazoTest]/[method:testCantidadTotalCartas()]</span></span> negated conditional &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>inicializarMazo<br/><b>Killed by : </b>edu.unac.backend.model.MazoTest.[engine:junit-jupiter]/[class:edu.unac.backend.model.MazoTest]/[method:testCantidadTotalCartas()]</span></span> changed conditional boundary &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@e72fb04_28'>28</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_28'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>inicializarMazo<br/><b>Killed by : </b>edu.unac.backend.model.MazoTest.[engine:junit-jupiter]/[class:edu.unac.backend.model.MazoTest]/[method:testCantidadTotalCartas()]</span></span> changed conditional boundary &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>inicializarMazo<br/><b>Killed by : </b>edu.unac.backend.model.MazoTest.[engine:junit-jupiter]/[class:edu.unac.backend.model.MazoTest]/[method:testCantidadTotalCartas()]</span></span> negated conditional &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@e72fb04_34'>34</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_34'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>inicializarMazo<br/><b>Killed by : </b>edu.unac.backend.model.MazoTest.[engine:junit-jupiter]/[class:edu.unac.backend.model.MazoTest]/[method:testCantidadTotalCartas()]</span></span> changed conditional boundary &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>inicializarMazo<br/><b>Killed by : </b>edu.unac.backend.model.MazoTest.[engine:junit-jupiter]/[class:edu.unac.backend.model.MazoTest]/[method:testCantidadTotalCartas()]</span></span> negated conditional &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@e72fb04_35'>35</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_35'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>inicializarMazo<br/><b>Killed by : </b>edu.unac.backend.model.MazoTest.[engine:junit-jupiter]/[class:edu.unac.backend.model.MazoTest]/[method:testCantidadTotalCartas()]</span></span> changed conditional boundary &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>inicializarMazo<br/><b>Killed by : </b>edu.unac.backend.model.MazoTest.[engine:junit-jupiter]/[class:edu.unac.backend.model.MazoTest]/[method:testCantidadTotalCartas()]</span></span> negated conditional &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@e72fb04_42'>42</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_42'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>mezclar<br/><b>Killed by : </b>edu.unac.backend.model.MazoTest.[engine:junit-jupiter]/[class:edu.unac.backend.model.MazoTest]/[method:testMezclarCambiaOrden()]</span></span> removed call to java/util/Collections::shuffle &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@e72fb04_46'>46</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_46'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getCartas<br/><b>Killed by : </b>edu.unac.backend.model.MazoTest.[engine:junit-jupiter]/[class:edu.unac.backend.model.MazoTest]/[method:testDistribucionCartas()]</span></span> replaced return value with Collections.emptyList for edu/unac/backend/model/Mazo::getCartas &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@e72fb04_50'>50</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_50'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getCantidadRestante<br/><b>Killed by : </b>edu.unac.backend.model.MazoTest.[engine:junit-jupiter]/[class:edu.unac.backend.model.MazoTest]/[method:testCantidadTotalCartas()]</span></span> replaced int return with 0 for edu/unac/backend/model/Mazo::getCantidadRestante &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@e72fb04_54'>54</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_54'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>sacarCarta<br/><b>Killed by : </b>edu.unac.backend.model.MazoTest.[engine:junit-jupiter]/[class:edu.unac.backend.model.MazoTest]/[method:testSacarCartaMazoVacio()]</span></span> negated conditional &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@e72fb04_58'>58</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@e72fb04_58'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>sacarCarta<br/><b>Killed by : </b>edu.unac.backend.model.MazoTest.[engine:junit-jupiter]/[class:edu.unac.backend.model.MazoTest]/[method:testSacarCarta()]</span></span> replaced return value with null for edu/unac/backend/model/Mazo::sacarCarta &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+</table>
+
+
+<h2>Active mutators</h2>
+<ul>
+
+<li class='mutator'>CONDITIONALS_BOUNDARY</li>
+
+<li class='mutator'>EMPTY_RETURNS</li>
+
+<li class='mutator'>FALSE_RETURNS</li>
+
+<li class='mutator'>INCREMENTS</li>
+
+<li class='mutator'>INVERT_NEGS</li>
+
+<li class='mutator'>MATH</li>
+
+<li class='mutator'>NEGATE_CONDITIONALS</li>
+
+<li class='mutator'>NULL_RETURNS</li>
+
+<li class='mutator'>PRIMITIVE_RETURNS</li>
+
+<li class='mutator'>TRUE_RETURNS</li>
+
+<li class='mutator'>VOID_METHOD_CALLS</li>
+
+</ul>
+
+<h2>Tests examined</h2>
+<ul>
+<li>edu.unac.backend.model.MazoTest.[engine:junit-jupiter]/[class:edu.unac.backend.model.MazoTest]/[method:testCantidadTotalCartas()] (0 ms)</li><li>edu.unac.backend.model.MazoTest.[engine:junit-jupiter]/[class:edu.unac.backend.model.MazoTest]/[method:testSacarCartaMazoVacio()] (0 ms)</li><li>edu.unac.backend.model.MazoTest.[engine:junit-jupiter]/[class:edu.unac.backend.model.MazoTest]/[method:testSacarCarta()] (1 ms)</li><li>edu.unac.backend.model.MazoTest.[engine:junit-jupiter]/[class:edu.unac.backend.model.MazoTest]/[method:testDistribucionCartas()] (2 ms)</li><li>edu.unac.backend.model.MazoTest.[engine:junit-jupiter]/[class:edu.unac.backend.model.MazoTest]/[method:testMezclarCambiaOrden()] (4 ms)</li><li>edu.unac.backend.model.PartidaTest.[engine:junit-jupiter]/[class:edu.unac.backend.model.PartidaTest]/[method:testInicializacionPartida()] (1 ms)</li><li>edu.unac.backend.model.PartidaTest.[engine:junit-jupiter]/[class:edu.unac.backend.model.PartidaTest]/[method:testSiguienteTurno()] (2 ms)</li><li>edu.unac.backend.model.PartidaTest.[engine:junit-jupiter]/[class:edu.unac.backend.model.PartidaTest]/[method:testConstructoresYSetters()] (1 ms)</li><li>edu.unac.backend.model.PartidaTest.[engine:junit-jupiter]/[class:edu.unac.backend.model.PartidaTest]/[method:testSiguienteTurnoSinJugadores()] (5 ms)</li><li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testPlantarse()] (3 ms)</li><li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testObtenerPartidaExitoso()] (6 ms)</li><li>edu.unac.backend.service.GameServiceValidacionTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceValidacionTest]/[method:rechazaNombreNulo()] (5 ms)</li><li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testObtenerHistorial()] (6 ms)</li><li>edu.unac.backend.service.GameServiceValidacionTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceValidacionTest]/[method:rechazaNombreMuyLargo()] (6 ms)</li><li>edu.unac.backend.service.GameServiceValidacionTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceValidacionTest]/[method:aceptaNombresEnLosLimites()] (6 ms)</li><li>edu.unac.backend.service.GameServiceValidacionTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceValidacionTest]/[method:rechazaNombreMuyCorto()] (7 ms)</li><li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testCrearPartidaCantidadInvalida()] (8 ms)</li><li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testGuardarPelusasConMesaVacia()] (7 ms)</li><li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testStreamAnyMatchConCartasDiferentes()] (3 ms)</li><li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testPartidaNoEnProgreso()] (9 ms)</li><li>edu.unac.backend.service.GameServiceValidacionTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceValidacionTest]/[method:rechazaNombreProhibidoSinImportarMayusculas()] (10 ms)</li><li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testSacarCartaMenosDeTresCartasValorRepetido()] (6 ms)</li><li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testObtenerPartidaNoExiste()] (12 ms)</li><li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testCrearPartidaExitosamente()] (8 ms)</li><li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testSacarCartaPerdidaDeTurno()] (7 ms)</li><li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testSacarCartaRepetidaConMenosDe3CartasSinPerdidaTurno()] (7 ms)</li><li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testGuardarPelusas()] (9 ms)</li><li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testSacarCartaSinPerdidaTurno()] (10 ms)</li><li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testRobarCartas()] (8 ms)</li><li>edu.unac.backend.service.GameServiceValidacionTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceValidacionTest]/[method:sacarConMazoVacioYSinJugadoresFinalizaSinGanador()] (11 ms)</li><li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testSacarCartaMasDeTresCartasValorNoRepetido()] (9 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:obtenerPartida_idNoNumericoDevuelve400()] (23 ms)</li><li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testRobarCartasDeVariosOponentes()] (9 ms)</li><li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testFinalizarPartidaGanadorNull()] (11 ms)</li><li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testSacarCartaMazoVacioFinalizaPartida()] (8 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:historico_vacioDevuelveListaVacia()] (25 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:crearPartida_sinCuerpoDevuelve400()] (28 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:plantarseSobrePartidaCreadaConCartasLanzaError()] (22 ms)</li><li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testSacarUltimaCartaDelMazo()] (12 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[test-template:accionesSobrePartidaInexistenteFallan(java.lang.String)]/[test-template-invocation:#1] (31 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:plantarseSobrePartidaFinalizadaConCartasLanzaError()] (25 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:robar_sinJugadorActualDevuelve400()] (23 ms)</li><li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testDesempatePorCantidadDeCartas()] (19 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[test-template:guardarYRobarSobrePartidaFinalizadaDevuelven400(java.lang.String)]/[test-template-invocation:#1] (25 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:guardar_despuesDeSacarUnaCartaDevuelve400()] (24 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:robar_noTocaLasCartasDelPropioJugador()] (27 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:obtenerPartida_sinMazoDevuelveCeroCartas()] (32 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:obtenerPartida_inexistenteLanzaError()] (44 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:sacar_sinJugadoresYMazoVacioTerminaEnEmpateTotal()] (35 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:robar_sinCoincidenciasDevuelve400YNoCambiaNada()] (34 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:desempate_empateTotalEligeUnoDeLosJugadores()] (31 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:sacar_agregaLaCartaAlJugadorActual()] (39 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:obtenerPartida_sinJugadoresNoTieneJugadorActual()] (49 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:plantarse_desdeElUltimoDeTresVuelveAlPrimero()] (44 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:sacar_conSoloDosCartasYValorRepetidoNoPierdeTurno()] (42 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:guardar_muevePelusasAlPozo()] (41 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[test-template:guardarYRobarSobrePartidaFinalizadaDevuelven400(java.lang.String)]/[test-template-invocation:#2] (46 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:sacar_conMazoVacioFinalizaYConsolidaCartasDeLaMesa()] (36 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:guardar_sinCartasDelanteDevuelve400()] (48 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:sacar_conTresCartasYValorNuevoNoPierdeTurno()] (47 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:robar_tomaCartasDelValorUltimoDeLosOponentes()] (44 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:desempate_decididoEnElValorUno()] (42 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:obtenerPartida_mapeaTodosLosCampos()] (51 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:plantarse_avanzaTurnoYDaLaVuelta()] (52 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:desempate_ordenInversoDeJugadores()] (43 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:sacar_ultimaCartaFinalizaYRegistraHistorico()] (47 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:sacarYLuegoRobar_usaElValorDeLaCartaSacada()] (59 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:robar_sinSacarCartaPrimeroDevuelve400()] (69 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:sacar_pierdeTurnoConTresCartasYValorRepetido()] (73 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:crearPartida_devuelveEstadoInicialCompleto()] (74 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:plantarse_sinCartasDelanteDevuelve400()] (91 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:desempate_gananteMasCartasDeValorBajo()] (93 ms)</li><li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testRobarCartasSinJugadorActual()] (146 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:sacar_perderTurnoConLaUltimaCartaFinalizaEnLaSiguienteLlamada()] (124 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:sacarSobrePartidaFinalizadaLanzaError()] (160 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[test-template:crearPartida_aceptaLimitesDeJugadores(java.lang.String)]/[test-template-invocation:#2] (188 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[test-template:crearPartida_aceptaLimitesDeJugadores(java.lang.String)]/[test-template-invocation:#1] (207 ms)</li><li>edu.unac.backend.service.GameServiceTest.[engine:junit-jupiter]/[class:edu.unac.backend.service.GameServiceTest]/[method:testCrearPartidaConListaNull()] (450 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[test-template:crearPartida_rechazaCantidadInvalida(java.lang.String)]/[test-template-invocation:#1] (540 ms)</li><li>edu.unac.backend.BackendApplicationTests.[engine:junit-jupiter]/[class:edu.unac.backend.BackendApplicationTests]/[method:contextLoads()] (561 ms)</li><li>edu.unac.backend.controller.GameControllerTest.[engine:junit-jupiter]/[class:edu.unac.backend.controller.GameControllerTest]/[method:historico_devuelveRegistrosGuardados()] (695 ms)</li><li>edu.unac.backend.model.ModelosSimplesTest.[engine:junit-jupiter]/[class:edu.unac.backend.model.ModelosSimplesTest]/[method:mainArrancaLaAplicacion()] (1460 ms)</li>
+</ul>
+
+<br/>
+
+Report generated by <a href='https://pitest.org'>PIT</a> 1.30.0 <a href='https://github.com/sponsors/hcoles'>support</a>
+
+</body>
+</html>

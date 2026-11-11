@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Partida.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">backend</a> &gt; <a href="index.source.html" class="el_package">edu.unac.backend.model</a> &gt; <span class="el_source">Partida.java</span></div><h1>Partida.java</h1><pre class="source lang-java linenums">package edu.unac.backend.model;
+
+import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+public class Partida {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+<span class="fc" id="L14">    @Enumerated(EnumType.STRING)</span>
+    private EstadoPartida estado = EstadoPartida.CREADA;
+
+<span class="fc" id="L17">    private int indiceJugadorActual = 0;</span>
+
+<span class="fc" id="L19">    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)</span>
+    private List&lt;Jugador&gt; jugadores = new ArrayList&lt;&gt;();
+
+    // ✅ OBLIGATORIO: CascadeType.ALL para que JPA guarde los cambios internos del mazo
+<span class="fc" id="L23">    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)</span>
+    private Mazo mazo = new Mazo();
+
+<span class="fc" id="L26">    public Partida() {</span>
+<span class="fc" id="L27">        this.mazo = new Mazo();</span>
+<span class="fc" id="L28">    }</span>
+
+<span class="fc" id="L30">    public Partida(Long id) {</span>
+<span class="fc" id="L31">        this.id = id;</span>
+<span class="fc" id="L32">        this.mazo = new Mazo();</span>
+<span class="fc" id="L33">    }</span>
+
+    // Valor de la última carta sacada en el turno actual; null si aún no sacó
+    private Integer valorUltimaCarta;
+
+<span class="fc" id="L38">    public Integer getValorUltimaCarta() { return valorUltimaCarta; }</span>
+<span class="fc" id="L39">    public void setValorUltimaCarta(Integer valorUltimaCarta) { this.valorUltimaCarta = valorUltimaCarta; }</span>
+
+    // Avanza al siguiente turno cíclicamente
+    public void siguienteTurno() {
+<span class="fc bfc" id="L43" title="All 2 branches covered.">        if (!jugadores.isEmpty()) {</span>
+<span class="fc" id="L44">            this.indiceJugadorActual = (this.indiceJugadorActual + 1) % jugadores.size();</span>
+        }
+<span class="fc" id="L46">        this.valorUltimaCarta = null;</span>
+<span class="fc" id="L47">    }</span>
+
+    public Jugador getJugadorActual() {
+<span class="fc bfc" id="L50" title="All 2 branches covered.">        if (jugadores.isEmpty()) {</span>
+<span class="fc" id="L51">            return null;</span>
+        }
+<span class="fc" id="L53">        return jugadores.get(indiceJugadorActual);</span>
+    }
+
+    // Getters y Setters
+    public Long getId() {
+<span class="fc" id="L58">        return id;</span>
+    }
+
+    public void setId(Long id) {
+<span class="fc" id="L62">        this.id = id;</span>
+<span class="fc" id="L63">    }</span>
+
+    public EstadoPartida getEstado() {
+<span class="fc" id="L66">        return estado;</span>
+    }
+
+    public void setEstado(EstadoPartida estado) {
+<span class="fc" id="L70">        this.estado = estado;</span>
+<span class="fc" id="L71">    }</span>
+
+    public int getIndiceJugadorActual() {
+<span class="fc" id="L74">        return indiceJugadorActual;</span>
+    }
+
+    public void setIndiceJugadorActual(int indiceJugadorActual) {
+<span class="fc" id="L78">        this.indiceJugadorActual = indiceJugadorActual;</span>
+<span class="fc" id="L79">    }</span>
+
+    public List&lt;Jugador&gt; getJugadores() {
+<span class="fc" id="L82">        return jugadores;</span>
+    }
+
+    public void setJugadores(List&lt;Jugador&gt; jugadores) {
+<span class="fc" id="L86">        this.jugadores = jugadores;</span>
+<span class="fc" id="L87">    }</span>
+
+    public Mazo getMazo() {
+<span class="fc" id="L90">        return mazo;</span>
+    }
+
+    public void setMazo(Mazo mazo) {
+<span class="fc" id="L94">        this.mazo = mazo;</span>
+<span class="fc" id="L95">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
